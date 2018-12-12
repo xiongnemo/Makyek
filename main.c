@@ -43,28 +43,59 @@ struct Command
 char buffer[MAX_BYTE] = {0};
 char board[BOARD_SIZE][BOARD_SIZE] = {0};
 char visualboard[BOARD_SIZE][BOARD_SIZE] = {0};
+int blackvalueboard[BOARD_SIZE][BOARD_SIZE] =
+{
+    {0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,1,1,1,1,0,0,0,0},
+    {0,0,0,2,2,2,2,2,2,0,0,0},
+    {0,0,3,3,3,3,3,3,3,2,0,0},
+    {0,2,2,3,4,4,30,25,20,25,30,0},
+    {1,1,2,3,4,5,25,300,200,300,25,0},
+    {1,1,2,3,4,5,20,200,400,200,20,0},
+    {0,2,2,3,4,4,25,300,200,300,25,0},
+    {0,0,3,3,3,3,30,25,20,25,30,0},
+    {0,0,0,2,2,2,2,2,0,0,0,0},
+    {0,0,0,0,1,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0}
+};
+int whitevalueboard[BOARD_SIZE][BOARD_SIZE] =
+{
+    {0,0,0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,1,1,1,1,0,0,0,0},
+    {0,0,0,2,2,2,2,2,2,0,0,0},
+    {0,30,25,20,25,30,3,3,3,2,0,0},
+    {0,25,300,200,300,25,4,4,3,2,1,0},
+    {1,20,200,400,200,20,5,4,3,2,1,0},
+    {1,25,300,200,300,25,4,3,2,1,0},
+    {0,30,25,20,25,30,4,4,3,2,0,0},
+    {0,0,3,3,3,3,3,3,3,0,0,0},
+    {0,0,0,2,2,2,2,2,0,0,0,0},
+    {0,0,0,0,1,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0}
+};
 char valueboard[BOARD_SIZE][BOARD_SIZE] =
 {
     {0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,3,3,3,3,1,1,1,0,0,0,0},
-    {3,4,4,3,2,2,2,2,2,0,0,0},
-    {4,5,5,5,5,3,3,3,3,2,0,0},
-    {4,6,6,6,5,4,4,4,3,2,1,0},
-    {4,6,6,6,4,5,5,6,6,6,1,0},
-    {4,5,6,3,4,5,5,6,6,6,1,0},
-    {0,1,2,3,4,4,4,4,6,6,4,4},
-    {0,0,2,3,3,3,3,4,5,5,5,4},
-    {0,0,0,0,2,2,2,4,5,5,4,3},
-    {0,0,0,0,0,2,2,3,0,4,3,2},
-    {0,0,0,0,0,2,2,3,0,3,2,1}
+    {0,0,0,0,1,1,1,1,0,0,0,0},
+    {0,0,0,2,2,2,2,2,2,0,0,0},
+    {0,0,3,3,3,3,3,3,3,2,0,0},
+    {0,2,2,3,4,4,4,4,3,2,1,0},
+    {1,1,2,3,4,5,5,4,3,2,1,0},
+    {1,1,2,3,4,5,5,4,3,2,1,0},
+    {0,2,2,3,4,4,4,4,3,2,0,0},
+    {0,0,3,3,3,3,3,3,3,0,0,0},
+    {0,0,0,2,2,2,2,2,0,0,0,0},
+    {0,0,0,0,1,1,1,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0,0,0}
 };
-
 int me_flag;
 int other_flag;
 
-int search_depth;//搜索层数
+int search_depth=4;//搜索层数
 
 int moves_in_match=0;
+int when_bigger_than_others_by_one=0;
+
 
 int kk[8]={4,5,6,7,0,1,2,3};
 
@@ -340,7 +371,22 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
     //srand((unsigned)time(NULL));
     int option_rand=1;//rand()%3;
-    search_depth=4;
+    int s=0;
+    int sother=0;
+    for (int i=0;i<BOARD_SIZE;i++)
+    {
+        for (int j=0;j<BOARD_SIZE;j++)
+        {
+            if (board[i][j]==me_flag)
+                s++;
+            if (board[i][j]==other_flag)
+                sother++;
+        }
+    }
+    if (s>sother)
+        when_bigger_than_others_by_one=1;
+    if (s<=sother)
+        when_bigger_than_others_by_one=0;
 	char currentboard[BOARD_SIZE][BOARD_SIZE];
 	if (moves_in_match==0&&me_flag==1)
     {
@@ -369,6 +415,7 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
         command.y=8;
         command.option=6;
     }
+
     if (moves_in_match!=0)
     {
         for (int i=0;i<BOARD_SIZE;i++)
@@ -424,7 +471,12 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
             if (isWhose_search(i,j,thisviusalboard,me_flag)==1)
             {
                 s++;
-                valueb=valueb+valueboard[i][j];
+                if (when_bigger_than_others_by_one==0)
+                    valueb=valueb+valueboard[i][j];
+                if (me_flag==1&&when_bigger_than_others_by_one==1)
+                    valueb=valueb+blackvalueboard[i][j];
+                if (me_flag==2&&when_bigger_than_others_by_one==1)
+                    valueb=valueb+whitevalueboard[i][j];
                 if(isWhose_search(i+1,j+3,thisviusalboard,me_flag)==1)//3*2对角线
                     form=form+0.6;
                 if(isWhose_search(i-1,j+3,thisviusalboard,me_flag)==1)
@@ -540,21 +592,22 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     if (1)//当自己不很占据优势就聚集（全局）
     {
-
+        /*
         if (me_flag==1)
         {
-            averx=6;
-            avery=8;
+            averx=7;
+            avery=11;
         }
         if (me_flag==2)
         {
-            averx=5;
-            avery=3;
+            averx=4;
+            avery=0;
         }
-        /*
+        */
+
         averx=sumx/s;//开始处理自己的方差x，平均x
         avery=sumy/s;//开始处理自己的方差y，平均y
-        */
+
         for (i=0;i<s;i++)
         {
             ex=ex+(x[i]-averx)*(x[i]-averx);
@@ -586,7 +639,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     */
     //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 100*s+28*smak+28*syek+19*otherdangerdisks-17*mydangerdisks+15*form-6*efinal+2*valueb;
+    return 100*s+28*smak+28*syek+19*otherdangerdisks-17*mydangerdisks+5*form-6*efinal+1*valueb;
 }
 float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {
