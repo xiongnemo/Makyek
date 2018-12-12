@@ -370,7 +370,7 @@ struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
     //srand((unsigned)time(NULL));
-    int option_rand=1;//rand()%3;
+    int option_rand=2;//rand()%3;
     int s=0;
     int sother=0;
     for (int i=0;i<BOARD_SIZE;i++)
@@ -639,7 +639,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     */
     //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 100*s+28*smak+28*syek+19*otherdangerdisks-17*mydangerdisks+5*form-6*efinal+1*valueb;
+    return 100*s+28*smak+28*syek+19*otherdangerdisks-17*mydangerdisks+15*form-6*efinal+1*valueb;
 }
 float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {
