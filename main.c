@@ -94,7 +94,7 @@ int other_flag;
 int search_depth=4;//搜索层数
 
 int moves_in_match=0;
-int when_bigger_than_others_by_one=0;
+//int when_bigger_than_others_by_one=0;
 
 
 int kk[8]={4,5,6,7,0,1,2,3};
@@ -370,7 +370,7 @@ struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
     //srand((unsigned)time(NULL));
-    int option_rand=2;//rand()%3;
+    int option_rand=1;//rand()%3;
     /*
     int s=0;
     int sother=0;
@@ -389,7 +389,7 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
     if (s<=sother)
         when_bigger_than_others_by_one=0;
     */
-    //上面一块是循环判断是否比对面多一个字
+    //上面一块是循环判断是否比对面多一个子
 	char currentboard[BOARD_SIZE][BOARD_SIZE];
 	if (moves_in_match==0&&me_flag==1)
     {

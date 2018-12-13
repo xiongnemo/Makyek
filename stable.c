@@ -62,7 +62,7 @@ char valueboard[BOARD_SIZE][BOARD_SIZE] =
 int me_flag;
 int other_flag;
 
-int search_depth;//ËÑË÷²ãÊý
+int search_depth=4;//ËÑË÷²ãÊý
 
 int moves_in_match=0;
 
@@ -340,7 +340,6 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
     //srand((unsigned)time(NULL));
     int option_rand=1;//rand()%3;
-    search_depth=4;
 	char currentboard[BOARD_SIZE][BOARD_SIZE];
 	if (moves_in_match==0&&me_flag==1)
     {
