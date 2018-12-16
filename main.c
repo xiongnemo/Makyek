@@ -387,13 +387,13 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     srand((unsigned)time(NULL));
     int i;//x坐标
     int j;//y坐标
-    int ii;
-    int jj;
-    int k;//挑夹位判断变量1
+    //int ii;
+    //int jj;
+    //int k;//挑夹位判断变量1
     int dire;//走子方向
-    int rand_flag=0;//随机挑夹位判定
-    int temp;
-    int randf[3]={999,999,999};
+    //int rand_flag=0;//随机挑夹位判定
+    //int temp;
+    //int randf[3]={999,999,999};
     int s=0;
     int valueb=0;
     int smak=0;
@@ -437,10 +437,11 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                     form=form+0.6;
                 if(isWhose_search(i-3,j-1,thisviusalboard,me_flag)==1)
                     form=form+0.6;
+                /*
                 randf[0]=999;
                 randf[1]=999;
                 randf[2]=999;
-                for (ii=0;ii<3;)
+                for (ii=0;ii<2;)
                 {
                     rand_flag=0;
                     temp=rand()%8;
@@ -455,7 +456,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                         ii++;
                     }
                 }
-                for (ii=0;ii<3;ii++)
+                for (ii=0;ii<2;ii++)
                 {
                     dire=randf[ii];
                     if (isWhose_search(i+DIR[dire][0],j+DIR[dire][1],thisviusalboard,0)==1)
@@ -485,7 +486,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                     }
                 }
                 //printf("%d\n",dire);
-
+                */
                 /*
                 for (dire=0;dire<8;dire++)
                 {
@@ -510,10 +511,11 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
             }
             if (isWhose_search(i,j,thisviusalboard,other_flag)==1)
             {
+                /*
                 randf[0]=999;
                 randf[1]=999;
                 randf[2]=999;
-                for (ii=0;ii<3;)
+                for (ii=0;ii<2;)
                 {
                     rand_flag=0;
                     temp=rand()%8;
@@ -528,7 +530,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                         ii++;
                     }
                 }
-                for (ii=0;ii<3;ii++)
+                for (ii=0;ii<2;ii++)
                 {
                     dire=randf[ii];
                     if (isWhose_search(i+DIR[dire][0],j+DIR[dire][1],thisviusalboard,0)==1)
@@ -557,7 +559,8 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                         }
                     }
                 }
-                /*
+                */
+
                 for (dire=0;dire<8;dire++)
                 {
 
@@ -573,7 +576,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                         }
 
                 }
-                */
+
             //    sother++;
             //    xother[sother-1]=i;//收集方差数据，坐标x
             //    yother[sother-1]=j;//收集方差数据，坐标y
@@ -635,7 +638,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     */
     //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 100*s+28*smak+28*syek+19*otherdangerdisks-17*mydangerdisks+15*form-6*efinal+1*valueb;
+    return 150*s+28*smak+28*syek+19*otherdangerdisks-12*mydangerdisks+15*form-6*efinal+1*valueb;
 }
 float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {

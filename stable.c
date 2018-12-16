@@ -338,7 +338,7 @@ struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
  */
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
-    //srand((unsigned)time(NULL));
+    srand((unsigned)time(NULL));
     int option_rand=1;//rand()%3;
 	char currentboard[BOARD_SIZE][BOARD_SIZE];
 	if (moves_in_match==0&&me_flag==1)
@@ -385,10 +385,15 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
 {
     srand((unsigned)time(NULL));
-    int i;
-    int j;
-    int k;//挑夹位判断变量1
+    int i;//x坐标
+    int j;//y坐标
+    //int ii;
+    //int jj;
+    //int k;//挑夹位判断变量1
     int dire;//走子方向
+    //int rand_flag=0;//随机挑夹位判定
+    //int temp;
+    //int randf[3]={999,999,999};
     int s=0;
     int valueb=0;
     int smak=0;
@@ -432,11 +437,60 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                     form=form+0.6;
                 if(isWhose_search(i-3,j-1,thisviusalboard,me_flag)==1)
                     form=form+0.6;
-                // 挑
-                for (dire=0;dire<8;dire++)
+                /*
+                randf[0]=999;
+                randf[1]=999;
+                randf[2]=999;
+                for (ii=0;ii<2;)
                 {
+                    rand_flag=0;
+                    temp=rand()%8;
+                    for (jj=0;jj<ii;jj++)
+                    {
+                        if (randf[jj]==temp)
+                            rand_flag=1;
+                    }
+                    if (rand_flag==0)
+                    {
+                        randf[ii]=temp;
+                        ii++;
+                    }
+                }
+                for (ii=0;ii<2;ii++)
+                {
+                    dire=randf[ii];
                     if (isWhose_search(i+DIR[dire][0],j+DIR[dire][1],thisviusalboard,0)==1)
                     {
+                        for (k = 0; k < 4; k++)//对于四个方向进行挑的判断
+                        {
+                            int x1 = i+DIR[dire][0] + intervention_dir[k][0];
+                            int y1 = j+DIR[dire][1] + intervention_dir[k][1];
+                            int x2 = i+DIR[dire][0] - intervention_dir[k][0];
+                            int y2 = j+DIR[dire][1] - intervention_dir[k][1];
+                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x1][y1] == other_flag && board[x2][y2] == other_flag)
+                            {
+                                smak=smak+2.4;
+                            }
+                        }
+                        for (k = 0; k < 8; k++)//对于八个方向进行夹的判断
+                        {
+                            int x1 = i+DIR[dire][0] + custodian_dir[k][0];
+                            int y1 = j+DIR[dire][1] + custodian_dir[k][1];
+                            int x2 = i+DIR[dire][0] + custodian_dir[k][0] * 2;
+                            int y2 = j+DIR[dire][1] + custodian_dir[k][1] * 2;
+                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x2][y2] == me_flag && board[x1][y1] == other_flag)
+                            {
+                                syek=syek+1.8;
+                            }
+                        }
+                    }
+                }
+                //printf("%d\n",dire);
+                */
+                /*
+                for (dire=0;dire<8;dire++)
+                {
+
                         if (isWhose_search(i-DIR[dire][0],j-DIR[dire][1],thisviusalboard,other_flag)==1)
                         {
                             mydangerdisks++;
@@ -448,34 +502,8 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                             break;
                         }
 
-                        /*
-                        for (k = 0; k < 4; k++)//对于四个方向进行挑的判断
-                        {
-                            int x1 = i+DIR[dire][0] + intervention_dir[k][0];
-                            int y1 = j+DIR[dire][1] + intervention_dir[k][1];
-                            int x2 = i+DIR[dire][0] - intervention_dir[k][0];
-                            int y2 = j+DIR[dire][1] - intervention_dir[k][1];
-                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x1][y1] == other_flag && board[x2][y2] == other_flag)
-                            {
-                                smak=smak+2.2;
-                            }
-                        }
-                        */
-                        /*
-                        for (k = 0; k < 8; k++)//对于八个方向进行夹的判断
-                        {
-                            int x1 = i+DIR[dire][0] + custodian_dir[k][0];
-                            int y1 = j+DIR[dire][1] + custodian_dir[k][1];
-                            int x2 = i+DIR[dire][0] + custodian_dir[k][0] * 2;
-                            int y2 = j+DIR[dire][1] + custodian_dir[k][1] * 2;
-                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x2][y2] == me_flag && board[x1][y1] == other_flag)
-                            {
-                                syek=syek+1.5;
-                            }
-                        }*/
-
-                    }
                 }
+                */
                 x[s-1]=i;//收集方差数据，坐标x
                 y[s-1]=j;//收集方差数据，坐标y
                 sumx=sumx+i;
@@ -483,10 +511,59 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
             }
             if (isWhose_search(i,j,thisviusalboard,other_flag)==1)
             {
-                for (dire=0;dire<8;dire++)
+                /*
+                randf[0]=999;
+                randf[1]=999;
+                randf[2]=999;
+                for (ii=0;ii<2;)
                 {
+                    rand_flag=0;
+                    temp=rand()%8;
+                    for (jj=0;jj<ii;jj++)
+                    {
+                        if (randf[jj]==temp)
+                            rand_flag=1;
+                    }
+                    if (rand_flag==0)
+                    {
+                        randf[ii]=temp;
+                        ii++;
+                    }
+                }
+                for (ii=0;ii<2;ii++)
+                {
+                    dire=randf[ii];
                     if (isWhose_search(i+DIR[dire][0],j+DIR[dire][1],thisviusalboard,0)==1)
                     {
+                        for (k = 0; k < 4; k++)//对于四个方向进行挑的判断
+                        {
+                            int x1 = i+DIR[dire][0] + intervention_dir[k][0];
+                            int y1 = j+DIR[dire][1] + intervention_dir[k][1];
+                            int x2 = i+DIR[dire][0] - intervention_dir[k][0];
+                            int y2 = j+DIR[dire][1] - intervention_dir[k][1];
+                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x1][y1] == me_flag && board[x2][y2] == me_flag)
+                            {
+                                smak=smak-1.5;
+                            }
+                        }
+                        for (k = 0; k < 8; k++)//对于八个方向进行夹的判断
+                        {
+                            int x1 = i+DIR[dire][0] + custodian_dir[k][0];
+                            int y1 = j+DIR[dire][1] + custodian_dir[k][1];
+                            int x2 = i+DIR[dire][0] + custodian_dir[k][0] * 2;
+                            int y2 = j+DIR[dire][1] + custodian_dir[k][1] * 2;
+                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x2][y2] == other_flag && board[x1][y1] == me_flag)
+                            {
+                                syek=syek-1.3;
+                            }
+                        }
+                    }
+                }
+                */
+
+                for (dire=0;dire<8;dire++)
+                {
+
                         if (isWhose_search(i-DIR[dire][0],j-DIR[dire][1],thisviusalboard,me_flag)==1)
                         {
                             otherdangerdisks++;
@@ -497,39 +574,14 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                             otherdangerdisks++;
                             break;
                         }
-                        /*
-                        for (k = 0; k < 4; k++)//对于四个方向进行挑的判断
-                        {
-                            int x1 = i+DIR[dire][0] + intervention_dir[k][0];
-                            int y1 = j+DIR[dire][1] + intervention_dir[k][1];
-                            int x2 = i+DIR[dire][0] - intervention_dir[k][0];
-                            int y2 = j+DIR[dire][1] - intervention_dir[k][1];
-                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x1][y1] == me_flag && board[x2][y2] == me_flag)
-                            {
-                                smak=smak-2.6;
-                            }
-                        }
 
-                        for (k = 0; k < 8; k++)//对于八个方向进行夹的判断
-                        {
-                            int x1 = i+DIR[dire][0] + custodian_dir[k][0];
-                            int y1 = j+DIR[dire][1] + custodian_dir[k][1];
-                            int x2 = i+DIR[dire][0] + custodian_dir[k][0] * 2;
-                            int y2 = j+DIR[dire][1] + custodian_dir[k][1] * 2;
-                            if (isInBound(x1, y1) && isInBound(x2, y2) && board[x2][y2] == other_flag && board[x1][y1] == me_flag)
-                            {
-                                syek=syek-1.8;
-                            }
-                        }
-                        */
-
-                    }
                 }
+
             //    sother++;
             //    xother[sother-1]=i;//收集方差数据，坐标x
             //    yother[sother-1]=j;//收集方差数据，坐标y
             //    sumotherx=sumotherx+i;
-            //   sumothery=sumothery+j;
+            //    sumothery=sumothery+j;
             }
         }
     }
@@ -586,7 +638,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     */
     //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 100*s+28*smak+28*syek+19*otherdangerdisks-17*mydangerdisks+15*form-6*efinal+1*valueb;
+    return 150*s+28*smak+28*syek+19*otherdangerdisks-12*mydangerdisks+15*form-6*efinal+1*valueb;
 }
 float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {
