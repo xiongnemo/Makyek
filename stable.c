@@ -338,35 +338,60 @@ struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
  */
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
-    srand((unsigned)time(NULL));
-    int option_rand=1;//rand()%3;
+    //srand((unsigned)time(NULL));
+    int option_X=0;//rand()%3;
+    int option_Y=1;//rand()%3;
 	char currentboard[BOARD_SIZE][BOARD_SIZE];
 	if (moves_in_match==0&&me_flag==1)
     {
-        if (option_rand==2)
+        if (option_X==3)
+        {
+            command.x=9;
+            command.y=8;
+            command.option=0;
+        }
+        if (option_X==2)
         {
             command.x=9;
             command.y=9;
             command.option=4;
         }
-        if (option_rand==1)
+        if (option_X==1)
         {
             command.x=5;
             command.y=3;
             command.option=5;
         }
-        if (option_rand==0)
+        if (option_X==0)
         {
             command.x=9;
             command.y=7;
             command.option=4;
         }
     }
+    if (moves_in_match==1&&me_flag==1)
+    {
+        if (option_X==0)
+        {
+            command.x=3;
+            command.y=9;
+            command.option=6;
+        }
+    }
     if (moves_in_match==0&&me_flag==2)
     {
-        command.x=6;
-        command.y=8;
-        command.option=6;
+        if (option_Y==1)
+        {
+            command.x=6;
+            command.y=7;
+            command.option=1;
+        }
+        if (option_Y==0)
+        {
+            command.x=6;
+            command.y=8;
+            command.option=6;
+        }
     }
     if (moves_in_match!=0)
     {
@@ -595,12 +620,12 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
         if (me_flag==1)
         {
             averx=7;
-            avery=11;
+            avery=8;
         }
         if (me_flag==2)
         {
             averx=4;
-            avery=0;
+            avery=3;
         }
         */
 
@@ -638,7 +663,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     */
     //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 150*s+28*smak+28*syek+19*otherdangerdisks-12*mydangerdisks+15*form-6*efinal+1*valueb;
+    return 150*s+28*smak+28*syek+19*otherdangerdisks-12*mydangerdisks+13*form-7*efinal+0*valueb;
 }
 float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {
