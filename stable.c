@@ -46,16 +46,16 @@ char visualboard[BOARD_SIZE][BOARD_SIZE] = {0};
 char valueboard[BOARD_SIZE][BOARD_SIZE] =
 {
     {0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,0,0,0,1,1,1,1,0,0,0,0},
-    {0,0,0,2,2,2,2,2,2,0,0,0},
-    {0,0,3,3,3,3,3,3,3,2,0,0},
-    {0,2,2,3,4,4,4,4,3,2,1,0},
-    {1,1,2,3,4,5,5,4,3,2,1,0},
-    {1,1,2,3,4,5,5,4,3,2,1,0},
-    {0,2,2,3,4,4,4,4,3,2,0,0},
-    {0,0,3,3,3,3,3,3,3,0,0,0},
-    {0,0,0,2,2,2,2,2,0,0,0,0},
-    {0,0,0,0,1,1,1,0,0,0,0,0},
+    {0,5,4,5,4,5,1,1,0,0,0,0},
+    {0,4,6,6,6,4,2,2,2,0,0,0},
+    {0,5,6,6,6,5,3,3,3,2,0,0},
+    {0,4,6,6,6,4,2,2,3,2,1,0},
+    {1,5,4,5,4,5,2,2,3,2,1,0},
+    {1,1,2,3,2,2,5,4,5,4,5,0},
+    {0,2,2,3,2,2,4,6,6,6,4,0},
+    {0,0,3,3,3,3,5,6,6,6,5,0},
+    {0,0,0,2,2,2,4,6,6,6,4,0},
+    {0,0,0,0,1,1,5,4,5,4,5,0},
     {0,0,0,0,0,0,0,0,0,0,0,0}
 };
 
@@ -663,7 +663,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     */
     //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 150*s+28*smak+28*syek+19*otherdangerdisks-12*mydangerdisks+13*form-7*efinal+0*valueb;
+    return 150*s+28*smak+28*syek+19*otherdangerdisks-12*mydangerdisks+13*form-7*efinal+1*valueb;
 }
 float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {
