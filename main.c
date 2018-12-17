@@ -393,6 +393,22 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
             command.option=6;
         }
     }
+    if (moves_in_match==1&&me_flag==2)
+    {
+        if (option_Y==1)
+        {
+            command.x=6;
+            command.y=8;
+            command.option=5;
+        }
+        if (option_Y==0)
+        {
+            command.x=2;
+            command.y=3;
+            command.option=7;
+        }
+    }
+
     if (moves_in_match!=0)
     {
         for (int i=0;i<BOARD_SIZE;i++)
@@ -512,7 +528,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                 }
                 //printf("%d\n",dire);
                 */
-                /*
+/*
                 for (dire=0;dire<8;dire++)
                 {
 
@@ -528,7 +544,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
                         }
 
                 }
-                */
+*/
                 x[s-1]=i;//收集方差数据，坐标x
                 y[s-1]=j;//收集方差数据，坐标y
                 sumx=sumx+i;
@@ -663,7 +679,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     }
     */
     //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 150*s+28*smak+28*syek+19*otherdangerdisks-12*mydangerdisks+13*form-7*efinal+1*valueb;
+    return 150*s+28*smak+28*syek+19*otherdangerdisks-4*mydangerdisks+13*form-7*efinal+1*valueb;
 }
 float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {
