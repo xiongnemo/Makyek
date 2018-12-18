@@ -1,6 +1,8 @@
 # depslib dependency file v1.0
-1544876146 source:d:\prgm\c_project_201811\tjq\main.c
+1545136909 source:d:\prgm\c_project_201811\tjq\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
+	<time.h>
+	<math.h>
 

@@ -78,8 +78,8 @@ void debug(const char *str);
 void printBoard(void);
 BOOL isInBound(int x, int y);
 BOOL isMine(int x, int y);
-float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag);//AlphaBeta剪枝
-float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE]);//搜索估值
+int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag);//AlphaBeta剪枝
+int search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE]);//搜索估值
 BOOL isWhose_search(int x, int y,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int whose_flag);//虚拟棋盘里的棋子到底是谁的？
 void search_place(int new_x,int new_y,int this_flag,char thisvisualboard[BOARD_SIZE][BOARD_SIZE]);//在虚拟棋盘落子并结算
 void initAI(int me);
@@ -393,6 +393,7 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
             command.option=6;
         }
     }
+    /*
     if (moves_in_match==1&&me_flag==2)
     {
         if (option_Y==1)
@@ -408,7 +409,7 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
             command.option=7;
         }
     }
-
+    */
     if (moves_in_match!=0)
     {
         for (int i=0;i<BOARD_SIZE;i++)
@@ -421,9 +422,10 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
         AlphaBeta(search_depth,-999999,9999999,currentboard,me_flag);
     }
     moves_in_match++;
+    //printf("%d\n",moves_in_match);
     return command;
 }
-float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
+int search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
 {
     srand((unsigned)time(NULL));
     int i;//x坐标
@@ -436,32 +438,34 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     //int temp;
     //int randf[3]={999,999,999};
     int s=0;
-    int valueb=0;
+    //int valueb=0;
     int smak=0;
     int syek=0;
     //int sother=0;
     float form=0;//阵型相关
-    int sumx=0;
-    int sumy=0;
+    //int sumx=0;
+    //int sumy=0;
     int mydangerdisks=0;//我的危险棋子
     int otherdangerdisks=0;//对方的危险棋子
     //int sumotherx=0;
     //int sumothery=0;
-    int x[20];
-    int y[20];
+    //int x[20];
+    //int y[20];
     //int xother[20];
     //int yother[20];
-    float averx=0;
-    float avery=0;
+    //float averx=0;
+    //float avery=0;
     //float averotherx=0;
     //float averothery=0;
-    float ex=0;
-    float ey=0;
+    //float ex=0;
+    //float ey=0;
     //float eotherx=0;
     //float eothery=0;
-    float e;
+    //float e;
     //float eother;
-    float efinal;
+    //float efinal;
+    int gather=0;
+    int final_score;
     for (i=0;i<BOARD_SIZE;i++)
     {
         for (j=0;j<BOARD_SIZE;j++)
@@ -469,15 +473,23 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
             if (isWhose_search(i,j,thisviusalboard,me_flag)==1)
             {
                 s++;
-                valueb=valueb+valueboard[i][j];
+                if (me_flag==1)
+                {
+                    gather=gather+(i-6)*(i-6)+(j-7)*(j-7);
+                }
+                if (me_flag==2)
+                {
+                    gather=gather+(i-5)*(i-5)+(j-4)*(j-4);
+                }
+                //valueb=valueb+valueboard[i][j];
                 if(isWhose_search(i+1,j+3,thisviusalboard,me_flag)==1)//3*2对角线
-                    form=form+0.6;
+                    form=form+6;
                 if(isWhose_search(i-1,j+3,thisviusalboard,me_flag)==1)
-                    form=form+0.6;
+                    form=form+6;
                 if(isWhose_search(i+3,j-1,thisviusalboard,me_flag)==1)
-                    form=form+0.6;
+                    form=form+6;
                 if(isWhose_search(i-3,j-1,thisviusalboard,me_flag)==1)
-                    form=form+0.6;
+                    form=form+6;
                 /*
                 randf[0]=999;
                 randf[1]=999;
@@ -545,10 +557,12 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
 
                 }
 */
+                /*
                 x[s-1]=i;//收集方差数据，坐标x
                 y[s-1]=j;//收集方差数据，坐标y
                 sumx=sumx+i;
                 sumy=sumy+j;
+                */
             }
             if (isWhose_search(i,j,thisviusalboard,other_flag)==1)
             {
@@ -630,9 +644,10 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
     {
         return -999999;
     }
+    /*
     if (1)//当自己不很占据优势就聚集（全局）
     {
-        /*
+
         if (me_flag==1)
         {
             averx=7;
@@ -643,7 +658,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
             averx=4;
             avery=3;
         }
-        */
+
 
         averx=sumx/s;//开始处理自己的方差x，平均x
         avery=sumy/s;//开始处理自己的方差y，平均y
@@ -656,6 +671,7 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
         e=ex/(s-1)+ey/(s-1);//自身方差处理完成
         efinal=e-12;
     }
+    */
     /*
     if (s<=sother+2)//当自己的占据优势就聚集到对方（被弃用）
     {
@@ -678,11 +694,13 @@ float search_value(char thisviusalboard[BOARD_SIZE][BOARD_SIZE])
         efinal=3/2*e+1/2*eother;//efinal是假设对方的平均位置得出的方差
     }
     */
-    //printf("%d,%d,%d,%f,%f\n",100*s,20*otherdangerdisks,-17*mydangerdisks,15*form,-6*efinal);
-    return 150*s+28*smak+28*syek+19*otherdangerdisks-4*mydangerdisks+13*form-7*efinal+1*valueb;
+    final_score=1500*s+280*smak+280*syek+190*otherdangerdisks-40*mydangerdisks+13*form-5*gather;
+    //printf("%d\n",final_score);
+    return final_score;
 }
-float AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
+int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisvisualboard[BOARD_SIZE][BOARD_SIZE],int this_flag)
 {
+	//printf("depth %d\n",nPlay);
 	char currentboard[BOARD_SIZE][BOARD_SIZE];
 	int score;
 	int i;
