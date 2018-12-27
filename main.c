@@ -1285,6 +1285,9 @@ int otherOption;
 
 int searchDepth=4;//搜索层数
 
+int simpleSearch=0;
+int alterSearch=0;
+
 int movesInMatch=0;//步数
 
 int searchSeq1B[8]= {4,5,6,7,0,1,2,3};//搜索顺序1B
@@ -1302,6 +1305,7 @@ int custodian_dir[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {
 void showStory(void);//用来在编译过程中显示小故事
 int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SIZE],int thisFlag);//AlphaBeta剪枝
 int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE]);//搜索估值
+int alterSearchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE]);//另一个搜索估值
 int simpleSearchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE]);//简易搜索估值
 BOOL isWhoseInThisBoard(int x, int y,char thisBoard[BOARD_SIZE][BOARD_SIZE],int whoseFlag);//虚拟棋盘里的棋子到底是不是谁的？
 void searchPlace(int new_x,int new_y,int thisFlag,char thisBoard[BOARD_SIZE][BOARD_SIZE]);//在虚拟棋盘落子并结算
@@ -1774,12 +1778,54 @@ struct Command computerMoveTheChess(const char board[BOARD_SIZE][BOARD_SIZE], in
     //printf("%d\n",movesInMatch);
     return command;
 }
-
 int simpleSearchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
 {
     int i;//x坐标
     int j;//y坐标
+    int s=0;//棋子个数
+    int form=0;
+    int gather=0;
+    int finalScore;
+    for (i=0; i<BOARD_SIZE; i++)//遍历棋盘开始
+    {
+        for (j=0; j<BOARD_SIZE; j++)
+        {
+            if (isWhoseInThisBoard(i,j,thisBoard,meFlag)==1)//如果是自己的子
+            {
+                s++;//自身子的数量
+                if (meFlag==1)//黑棋聚集
+                {
+                    gather=gather+(i-6)*(i-6)+(j-7)*(j-7);
+                }
+                if (meFlag==2)//白棋聚集
+                {
+                    gather=gather+(i-5)*(i-5)+(j-4)*(j-4);
+                }
+                if(isWhoseInThisBoard(i+1,j+3,thisBoard,meFlag)==1)//4*2对角线
+                    form=form+6;
+                if(isWhoseInThisBoard(i-1,j+3,thisBoard,meFlag)==1)
+                    form=form+6;
+                if(isWhoseInThisBoard(i+3,j-1,thisBoard,meFlag)==1)
+                    form=form+6;
+                if(isWhoseInThisBoard(i-3,j-1,thisBoard,meFlag)==1)
+                    form=form+6;
+            }
+            if (s==0)
+            {
+                return -999999;
+            }
+        }
+    }
+    finalScore=1500*s+13*form-7*gather;
+    return finalScore;
+}
+int alterSearchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
+{
+    int i;//x坐标
+    int j;//y坐标
     int dire;//危险棋子走子方向
+    int dire1;//危险棋子走子方向1
+    int dangerousFlag=0;//危险棋子标识
     int s=0;//棋子个数
     int form=0;
     int othersDangerousDisks=0;//对方的危险棋子
@@ -1815,19 +1861,26 @@ int simpleSearchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
             }
             if (isWhoseInThisBoard(i,j,thisBoard,otherFlag)==1)
             {
+                dangerousFlag=0;
                 for (dire=0; dire<8; dire++)
                 {
                     if (isWhoseInThisBoard(i+DIR[dire][0],j+DIR[dire][1],thisBoard,0)==1)
                     {
-                        if (isWhoseInThisBoard(i-DIR[dire][0],j-DIR[dire][1],thisBoard,meFlag)==1)
+                        if ((isWhoseInThisBoard(i-DIR[dire][0],j-DIR[dire][1],thisBoard,meFlag)==1)||(isWhoseInThisBoard(i+2*DIR[dire][0],j+2*DIR[dire][1],thisBoard,otherFlag)==1))
                         {
-                            othersDangerousDisks++;
-                            break;
-                        }
-                        if (isWhoseInThisBoard(i+2*DIR[dire][0],j+2*DIR[dire][1],thisBoard,otherFlag)==1)
-                        {
-                            othersDangerousDisks++;
-                            break;
+                            for(dire1=0;dire1<8;dire++)
+                            {
+                                if (isWhoseInThisBoard(i+DIR[dire][0]+DIR[dire1][0],j+DIR[dire][1]+DIR[dire1][1],thisBoard,meFlag)==1)
+                                {
+                                    othersDangerousDisks++;
+                                    dangerousFlag=1;
+                                    break;
+                                }
+                            }
+                            if(dangerousFlag==1)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
@@ -1963,7 +2016,15 @@ int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SI
         }
     }
     if(nPlay==0)
-        return searchValue(thisBoard);  //叶子节点返回估值
+    {
+        if (alterSearch==0)
+            return searchValue(thisBoard);
+        if (alterSearch==1)
+            return alterSearchValue(thisBoard);
+        if (simpleSearch==0)
+            return simpleSearchValue(thisBoard);
+    }
+
     for (i=0; i<BOARD_SIZE; i++)//备份棋盘
     {
         for (j=0; j<BOARD_SIZE; j++)
