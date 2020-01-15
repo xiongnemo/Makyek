@@ -30,8 +30,8 @@ typedef int OPTION;
 
 #define START "START"
 #define PLACE "PLACE"
-#define TURN  "TURN"
-#define END   "END"
+#define TURN "TURN"
+#define END "END"
 
 struct Command
 {
@@ -43,20 +43,19 @@ struct Command
 char buffer[MAX_BYTE] = {0};
 char board[BOARD_SIZE][BOARD_SIZE] = {0};
 char valueboard[BOARD_SIZE][BOARD_SIZE] =
-{
-    {0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,5,4,5,4,5,1,1,0,0,0,0},
-    {0,4,6,6,6,4,2,2,2,0,0,0},
-    {0,5,6,6,6,5,3,3,3,2,0,0},
-    {0,4,6,6,6,4,2,2,3,2,1,0},
-    {1,5,4,5,4,5,2,2,3,2,1,0},
-    {1,1,2,3,2,2,5,4,5,4,5,0},
-    {0,2,2,3,2,2,4,6,6,6,4,0},
-    {0,0,3,3,3,3,5,6,6,6,5,0},
-    {0,0,0,2,2,2,4,6,6,6,4,0},
-    {0,0,0,0,1,1,5,4,5,4,5,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0}
-};
+    {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 5, 4, 5, 4, 5, 1, 1, 0, 0, 0, 0},
+        {0, 4, 6, 6, 6, 4, 2, 2, 2, 0, 0, 0},
+        {0, 5, 6, 6, 6, 5, 3, 3, 3, 2, 0, 0},
+        {0, 4, 6, 6, 6, 4, 2, 2, 3, 2, 1, 0},
+        {1, 5, 4, 5, 4, 5, 2, 2, 3, 2, 1, 0},
+        {1, 1, 2, 3, 2, 2, 5, 4, 5, 4, 5, 0},
+        {0, 2, 2, 3, 2, 2, 4, 6, 6, 6, 4, 0},
+        {0, 0, 3, 3, 3, 3, 5, 6, 6, 6, 5, 0},
+        {0, 0, 0, 2, 2, 2, 4, 6, 6, 6, 4, 0},
+        {0, 0, 0, 0, 1, 1, 5, 4, 5, 4, 5, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
 /*
 ccccccccccccccccccllllllllllllllllllllllllolloooooooooolllllllollllllllllllllllxKXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXK0000000000000000000000000000000000000000KKXXXXXXXXXXXXXXXXXXKOOK
@@ -423,27 +422,27 @@ int otherX;
 int otherY;
 int otherOption;
 
-int searchDepth=4;//Ћ—Ћч≤г э
+int searchDepth = 4; //пњљпњљпњљпњљпњљпњљпњљпњљ
 
-int movesInMatch=0;
+int movesInMatch = 0;
 
-int kk[8]= {4,5,6,7,0,1,2,3};
+int kk[8] = {4, 5, 6, 7, 0, 1, 2, 3};
 
 struct Command command = {0, 0, 0};
 
-const int DIR[8][2] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1} };
-int intervention_dir[4][2] = { {1, 0}, {0, 1}, {1, 1}, {1, -1} };//…ѕѕ¬ „у”“ –±”“…ѕѕ¬ –±„у…ѕѕ¬
-int custodian_dir[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} }; //
+const int DIR[8][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+int intervention_dir[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};                                   //пњљпњљпњљпњљ пњљпњљпњљпњљ –±пњљпњљпњљпњљпњљпњљ –±пњљпњљпњљпњљпњљпњљ
+int custodian_dir[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}}; //
 
 void debug(const char *str);
 void printBoard(void);
 void showStory(void);
 BOOL isInBound(int x, int y);
 BOOL isMine(int x, int y);
-int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SIZE],int this_flag);//AlphaBetaЉф÷¶
-int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE]);//Ћ—Ћчєј÷µ
-BOOL isWhoseInThisBoard(int x, int y,char thisBoard[BOARD_SIZE][BOARD_SIZE],int whose_flag);//–йƒв∆е≈ћјпµƒ∆е„”µљµ„ «Ћ≠µƒ£њ
-void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BOARD_SIZE]);//‘Џ–йƒв∆е≈ћ¬д„”≤ҐљбЋг
+int AlphaBeta(int nPlay, int nAlpha, int nBeta, char thisBoard[BOARD_SIZE][BOARD_SIZE], int this_flag); //AlphaBetaпњљпњљ÷¶
+int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE]);                                                //пњљпњљпњљпњљпњљпњљ÷µ
+BOOL isWhoseInThisBoard(int x, int y, char thisBoard[BOARD_SIZE][BOARD_SIZE], int whose_flag);          //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ”µпњљпњљпњљпњљпњљЋ≠пњљƒ£пњљ
+void searchPlace(int new_x, int new_y, int this_flag, char thisBoard[BOARD_SIZE][BOARD_SIZE]);          //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ”≤пњљпњљпњљпњљпњљ
 void initAI(int me);
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag);
 struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me);
@@ -452,7 +451,7 @@ void start(int flag);
 void turn(void);
 void end(int x);
 void loop(void);
-//…щ√чљб ш
+//пњљпњљпњљпњљпњљпњљпњљпњљ
 int main(int argc, char *argv[])
 {
     loop();
@@ -460,7 +459,7 @@ int main(int argc, char *argv[])
 }
 void loop(void)
 {
-//  freopen("../input", "r", stdin);
+    //  freopen("../input", "r", stdin);
     while (TRUE)
     {
         memset(buffer, 0, sizeof(buffer));
@@ -485,9 +484,9 @@ void loop(void)
             int x, y;
             OPTION option;
             sscanf(buffer, "%s %d %d %d", tmp, &x, &y, &option);
-            otherX=x;
-            otherY=y;
-            otherOption=option;
+            otherX = x;
+            otherY = y;
+            otherOption = option;
             place(x, y, option, otherFlag);
         }
         else if (strstr(buffer, TURN))
@@ -510,7 +509,7 @@ void end(int x)
 void turn(void)
 {
     // AI
-    struct Command command = aiTurn((const char (*)[BOARD_SIZE])board, meFlag);
+    struct Command command = aiTurn((const char(*)[BOARD_SIZE])board, meFlag);
     place(command.x, command.y, command.option, meFlag);
     printf("%d %d %d\n", command.x, command.y, command.option);
     fflush(stdout);
@@ -541,114 +540,114 @@ void debug(const char *str)
 }
 void showStory(void)
 {
-    int storyBegins;//’вјп «є  ¬µƒњ™ЌЈ
-    int storyLine1ForYou;//ЉІ“∞“≤”–Ћэ„‘ЉЇµƒ–ƒ“в°£
-    int storyLine2ForYou;//ґшќ“°≠°≠“—Њ≠ќёі”µ√÷™°£
-    int storyLine3ForYou;//ќ“”–’в÷÷Є–Њх°£
-    int storyLine4ForYou;//ќ“‘Џƒ«∆ђћмњ’µƒ±ЋЈљ£ђњіµљЅЋЈ≈«зµƒ“ї”з°£
-    int storyLine5ForYou;//Ј¬Јр «ќ™ЅЋ„ЈЄѕƒ«”з«зњ’“ї—щ£ђќ“±ЉѕтЅЋ—І–£°£
-    int storyLine6ForYou;//»ЋЊњЊєќ™ ≤√іїбѕ≤їґ…ѕЅн“їЄц»ЋƒЎ°≠°≠ќ“Јі’э√їƒ№јнљв°£
-    int storyLine7ForYou;//ЊњЊє ≤√і—щµƒЄ–«й£ђ≤≈ƒ№≥∆÷Ѓќ™ѕ≤їґ°£
-    int storyLine8ForYou;//Ћµ’жµƒ£ђќ“ґ‘’в–©ґЉ≤ї«е≥ю°£
-    int storyLine9ForYou;//ќ““≤≤ї÷™µјѕ≤їґ…ѕ“їЄц»ЋЊњЊє“™ї®ґа…ў ±Љд£ђ“™љш––ґа…ўґ‘ї∞°£
-    int storyLine10ForYou;//÷ї «£ђ“їµ©ѕлµљƒ«Єц»Ћ£ђЊЌїбЊхµ√Ї№љє‘к°£
-    int storyLine11ForYou;//њ… «“ї«–»іїб“тќ™Ћэµƒ“їЄц–¶»Ёґш—ћѕы‘∆…Ґ°£ЊЌ «’в—щ≤їњ…ЋЉ“йµƒ“ї÷÷Є–«й°£
-    int storyLine12ForYou;//ґ‘–¬ћ√≤ “ф£ђќ“≤ї‘ш”–єэ’в÷÷ѕлЈ®°£
-    int storyLine13ForYou;//»їґш≤ї÷™µјќ™ ≤√і£ђѕ÷‘Џќ“»іґ‘Ћэ±І”–ƒ«÷÷Є–«й°£
-    int storyLine14ForYou;//–¬ћ√Ћэ…ъ∆ш“≤Ї√£ђ“™њё“≤∞’°£
-    int storyLine15ForYou;//µЂµЂ «°≠°≠‘ЏіЋ÷ЃЇу£ђќ“±»Ћ≠ґЉѕ£Ќы£ђЋэƒ№ѕс”кєэћм«з“ї—щ’јЈ≈–¶—’°£
-    int storyLine16ForYou;//ќ“≤їљы»•ѕлѕу’в–©°£
-    int storyLine17ForYou;//ќ“ѕ≤їґЋэ¬р°£
-    int storyLine18ForYou;//їт–нќ““ї÷±ґЉ «ѕ≤їґ„≈µƒ°£
-    int storyLine19ForYou;//“≤–ні””щ”∞±хƒ« ±Їтњ™ Љ£ђќ“ЊЌѕ≤їґ…ѕЅЋЋэ°£
-    int storyLine20ForYou;//ЇЌ∆дЋы≈у”—ѕа±»£ђќ“√«÷ЃЉдµƒ’ж–ƒї∞Єьґа£ђ‘Џ√жґ‘Ћэµƒ ±Їтќ“їбЄьЉ”Ј≈Ћ…°£
-    int storyLine21ForYou;//“≤–н‘Џќ“√«їє «ƒ«÷÷єЎѕµµƒ ±Їт£ђќ“≤ї÷™≤їЊхЉдЊЌґ‘Ћэ≤ъ…ъЅЋЇ√Є–°£
-    int storyLine22ForYou;//”кЌ£ЅЋ£ђ‘Џі‘‘∆…Ґ»•÷ЃЇу£ђ“Ђ—џµƒ—фєвї”»чґшѕ¬°£
-    int storyLine23ForYou;//ƒ«∆ђЅчєв£ђ≤Ґ≤ї «Ќї»їљµ…ъµƒ°£
-    int storyLine24ForYou;//ґш «Ї№Њ√÷Ѓ«∞ЊЌЌ£Ѕф‘Џ‘∆…ѕЅЋ°£
-    int storyLine25ForYou;//Є–Њхґ‘ЋэµƒЄ–«й£ђ”лƒ«–©Ѕчєв“≤”––©…сЋ∆°£
-    int storyLine26ForYou;//∆д µ“ї÷±іж‘Џ„≈£ђ÷ї“™’ѕ∞≠“їµ©ѕы І£ђ”Џ «±г≈з”њґш≥ц°≠°≠
-    int storyLine27ForYou;//Є–Њх£ђƒ«∆д µ“≤≤їєэ «ќ™ЅЋ є„‘ЉЇѕа–≈’в≤їњ…ЋЉ“йµƒЄ–«йґш’“µƒ“їЄцЌбјнґш“—°£
-    int storyLine28ForYou;//≤їєэ£ђќ“»±…ўµƒ±г «’вЄц°£
-    int storyLine29ForYou;//»•Љы–¬ћ√∞…°£
-    int storyLine30ForYou;//°Єєю°≠°≠єю°≠°≠°є
-    int storyLine31ForYou;//–¬ћ√≤ї‘ЏЅЋ°£
-    int storyLine32ForYou;//“—Њ≠їЎ»•ЅЋ¬р£њ
-    int storyLine33ForYou;//°Є°≠°≠°є
-    int storyLine34ForYou;//ќ“≤ї„‘ЊхµЎ£ђњіѕтЅЋЇЏ∞е°£
-    int storyLine35ForYou;//»°≥ц“ї÷ІЈџ± °≠°≠їЎєэ…сјі£ђќ““—Њ≠–іѕ¬ЅЋ°£
-    int storyLine36ForYou;//°Їќ“ѕ≤їґƒг°ї
-    int storyLine37ForYou;//∞„…Ђµƒ„÷£ђ‘ЏЇЏ∞е…ѕ£ђЈ«≥£ѕ‘—џ°£
-    int storyLine38ForYou;//ќ“ѕ≤їґƒг°£
-    int storyLine39ForYou;//µ»µљ–іѕ¬’вЉЄЄц„÷£ђќ“≤≈µЏ“їіќґ‘’вЈЁЄ–«й”–ЅЋ µЄ–°£
-    int storyLine40ForYou;//њі∆рјіЇ№„≥єџ°£
-    int storyLine41ForYou;//°Є°≠°≠°є
-    int storyLine42ForYou;//Ћг°ҐЋгЅЋ£ђїє «≤Ѕµф∞…°£
-    int storyLine43ForYou;//±ѕЊє’вЇЌƒ«Єц ±Їтµƒ“в“е≤їЌђ°£
-    int storyLine44ForYou;//’в ±£ђ√≈њ™ЅЋ°£
-    int storyLine45ForYou;//°Є£°£њ°є
-    int storyLine46ForYou;//°ЄЏј°є
-    int storyLine47ForYou;//°Є°≠°≠°є
-    int storyLine48ForYou;//–¬ћ√Ћэ£ђ’Њ‘Џƒ«јп°£
-    int storyLine49ForYou;//°Єƒг‘Џ∞°£њ°є
-    int storyLine50ForYou;//°Єќ“‘Џ∞°°≠°≠°є
-    int storyLine51ForYou;//–¬ћ√Ћэ£ђЊЌƒ«—щ—∆»їµЎњі„≈ЇЏ∞е…ѕµƒќƒ„÷£ђ“‘Љ∞–іѕ¬ƒ«–©„÷µƒќ“°£
-    int storyLine52ForYou;//°Є°≠°≠°є
-    int storyLine53ForYou;//°Є°≠°≠°є
-    int storyLine54ForYou;//°Є“‘«∞£ђЇѕ≥™±»»ьµƒ ±Їт°≠°≠°є
-    int storyLine55ForYou;//°Є‘з…ѕјіµƒ ±Їт£ђ‘ЏЇЏ∞е…ѕ“≤”–ЇЌ’в“ї—щѕ‘—џµƒЉЄ––„÷ƒЎ°є
-    int storyLine56ForYou;//°Єƒ«Єц£ђ‘≠јі «єъЉыЊэ–іµƒ∞°°є
-    int storyLine57ForYou;//°Єа≈°≠°≠°є
-    int storyLine58ForYou;//°Є’в «°≠°≠ ≤√і“вЋЉƒЎ£њ°є
-    int storyLine59ForYou;//°Є°≠°≠°є
-    int storyLine60ForYou;//°Є»зƒг°≠°≠ЋщЉы∞…°є
-    int storyLine61ForYou;//°Є «–іЄшЋ≠µƒƒЎ£њ°є
-    int storyLine62ForYou;//°Є°≠°≠°є
-    int storyLine63ForYou;//Ы≤ћЂј…:
-    int storyLine64ForYou;//°ЄЇЌ“‘«∞°≠°≠“ї—щ°є
-    int storyLine65ForYou;//°Є–іЄшƒгµƒ°є
-    int storyLine66ForYou;//°Є°≠°≠°є
-    int storyLine67ForYou;//°Є°≠°≠°є
-    int storyLine68ForYou;//°≠°≠
-    int storyLine69ForYou;//°Є∞°°≠°≠°є
-    int storyLine70ForYou;//°ЄянЏј°є
-    int storyLine71ForYou;//°ЄянЏјЏјЏјЏј°є
-    int storyLine72ForYou;//°Є–¬°Ґ–¬ћ√£њ°є
-    int storyLine73ForYou;//°ЄќЎЏјЏј°є
-    int storyLine74ForYou;//Ћэњ™ Љ≤їЌ£µЎ≥й∆ь°£
-    int storyLine75ForYou;//°Є–¬ћ√°≠°≠°є
-    int storyLine76ForYou;//÷±µљЋэµƒ—џјбЌ£ѕ¬јіќ™÷є£ђќ““ї÷±ґЉ‘Џ‘≠µЎµ»„≈°£
-    int storyLine77ForYou;//ƒ√≥ц–¬ћ√Ј≈‘Џљћ “јпµƒ…°£ђЇЌЋэ‘Џ–°”к÷–ћ§…ѕєйЌЊ°£
-    int storyLine78ForYou;//Ї№њм£ђ‘∆…Ґћмњ™£ђћЂ—фµƒєвї‘’’ЅЅЅЋіуµЎ°£
-    int storyLine79ForYou;//°≠°≠
-    int storyLine80ForYou;//≤їЊ√£ђќ“√«ЌЈґ•…ѕµƒћмњ’“≤±дµ√«е≥ЇЌЄ√ч°£
-    int storyLine81ForYou;//°Є”кЌ£ЅЋƒЎ°≠°≠°є
-    int storyLine82ForYou;//°Єа≈°є
-    int storyLine83ForYou;//¬Ј…ѕµƒїэЋЃ“‘Љ∞÷¶“ґ…ѕµƒ”к¬ґ’џ…д≥цµƒєв√Ґ «ƒ«√і“Ђ—џ°£
-    int storyLine84ForYou;//ќ“√«“≤±£≥÷„≈≥≈„≈…°µƒ„Ћ ∆Љћ–ш«∞––°£
-    int storyLine85ForYou;//ќ“√«ѕ÷‘Џ£ђґЉ «“їЄ± ≤√і—щµƒ±н«йƒЎ°£
-    int storyLine86ForYou;//љбєыµљ„оЇу£ђ «“‘’в÷÷∆ж√оµƒЈљ љіЂіпЅЋ„‘ЉЇµƒ–ƒ“в°£
-    int storyLine87ForYou;//÷±љ”Єъ–¬ћ√Ћµќ“ѕ≤їґЋэ≤їЊЌ––ЅЋ°£
-    int storyLine88ForYou;//ЊЌѕс–¬ћ√ƒ«—щ°≠°≠ЇЅ≤ї’Џ—ЏµЎ°£
-    int storyLine89ForYou;//ЋдЋµ–ƒјпїє «”––©ќёЈ® Ќ»ї°£µЂ’в—щ‘Џ”кєэћм«зµƒћмњ’ѕ¬÷і…°Ќђ––£ђƒ«–©Њјљб“≤“їµг“їµгµЎѕы…ҐЅЋ°£
-    int storyLine90ForYou;//ќ“≤їґЃ»Ћ–ƒ£ђ…х÷ЅЅђ„‘ЉЇµƒƒЏ–ƒґЉ≤їґЃ°£
-    int storyLine91ForYou;//µЂ «£ђ“≤їб”–»Ђ≤њ√чќъ°Ґ–ƒ–ƒѕа”°µƒЋ≤Љд°£
-    int storyLine92ForYou;//±»»з£ђ‘Џ”кЇуњіµљћмњ’Є°ѕ÷µƒ≤ Їз ±°£
-    int storyLine93ForYou;//±»»з£ђ‘Џ”кЇуµƒєй¬Ј…ѕ£ђ»і»‘Њ…ґю»Ћє≤≥≈“ї…° ±°£
-    int storyLine94ForYou;//Ѕљ»Ћµƒ–ƒ–ч£ђ≤їњ…ЋЉ“йµЎ÷ЎЇѕ‘ЏЅЋ“ї∆р°£
-    int storyLine95ForYou;//їт–нїб”–ƒ«—щµƒЋ≤Љд°£
-    int storyLine96ForYou;//„№ґш—‘÷Ѓ£ђїє”–“їЉю ¬ќ“ѕ÷‘ЏЇ№«е≥ю°£
-    int storyLine97ForYou;//„я‘Џќ“≈‘±яµƒ–¬ћ√Ќї»їЌ£ЅЋѕ¬јі°£
-    int storyLine98ForYou;//–я«”µЎњіѕтќ“°£
-    int storyLine99ForYou;//–ƒјпЇ№≥д µ°£
-    int storyLine100ForYou;//–°–°µƒ…°Ћ∆Їхњм“™’÷≤ї„°’в¬ъ“зµƒ«йЄ–ЅЋ°£
-    int storyLine101ForYou;//ѕс «ѕл“™÷∆÷є ≤√і“ї—щ£ђќ“√«µƒЊајл÷рљ•ћщљь°≠°≠
-    int storyLine102ForYou;//„№ґш—‘÷Ѓ£ђ”–“їЉю ¬ «‘ў«е≥ю≤їєэ°£
-    int storyLine103ForYou;//’в“їћм£ђќ“ЇЌ–¬ћ√≥…ќ™ЅЋЅµ»Ћ°£
-    int storyLine104ForYou;//°™°™°ґѕл“™іЂіпЄшƒгµƒ∞ЃЅµ°Ј
-    int storyEnd;//’вјп «є  ¬µƒљбќ≤£ђ»зєыƒгњіµљµƒ «µє–т£ђ«лі”ѕ¬Ќщ…ѕ‘ƒґЅ
+    int storyBegins;        //пњљпњљпњљпњљпњљ«єпњљпњљ¬µƒњпњљЌЈ
+    int storyLine1ForYou;   //пњљпњљ“∞“≤пњљпњљпњљпњљпњљ‘Љпњљпњљпњљпњљпњљпњљв°£
+    int storyLine2ForYou;   //пњљпњљпњљ“°пњљпњљпњљпњљ—Њпњљпњљёі”µпњљ÷™пњљпњљ
+    int storyLine3ForYou;   //пњљпњљпњљпњљпњљпњљпњљ÷Є–Њпњљпњљпњљ
+    int storyLine4ForYou;   //пњљпњљпњљпњљпњљпњљ∆ђпњљпњљ’µƒ±ЋЈпњљпњљпњљпњљпњљпњљпњљпњљЋЈпњљпњљпњљпњљ“їпњљз°£
+    int storyLine5ForYou;   //пњљ¬Јпњљпњљпњљќ™пњљпњљ„Јпњљпњљпњљпњљпњљпњљпњљпњљпњљ“їпњљпњљпњљпњљпњљ“±пњљпњљпњљпњљпњљ—І–£пњљпњљ
+    int storyLine6ForYou;   //пњљЋЊпњљпњљпњљќ™ ≤√іпњљпњљѕ≤пњљпњљпњљпњљпњљпњљ“їпњљпњљпњљпњљпњљЎ°пњљпњљпњљпњљ“Јпњљпњљпњљ√їпњљпњљпњљпњљпњљв°£
+    int storyLine7ForYou;   //пњљпњљпњљпњљ ≤√іпњљпњљпњљƒЄпњљпњљй£ђпњљпњљпњљ№≥пњљ÷Ѓќ™ѕ≤пњљпњљпњљпњљ
+    int storyLine8ForYou;   //Ћµпњљпњљƒ£пњљпњљ“ґпњљпњљпњљ–©пњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine9ForYou;   //пњљпњљ“≤пњљпњљ÷™пњљпњљѕ≤пњљпњљпњљпњљ“їпњљпњљпњљЋЊпњљпњљпњљ“™пњљпњљпњљпњљпњљпњљ ±пњљд£ђ“™пњљпњљпњљ–ґпњљпњљўґ‘їпњљпњљпњљ
+    int storyLine10ForYou;  //÷їпњљ«£пњљ“їпњљпњљпњљлµљпњљ«ЄпњљпњљЋ£пњљпњљЌїпњљпњљпњљ√Ї№љпњљпњљк°£
+    int storyLine11ForYou;  //пњљпњљпњљпњљ“їпњљпњљ»іпњљпњљпњљпњљќ™пњљпњљпњљпњљ“їпњљпњљ–¶пњљЁґпњљпњљпњљпњљпњљпњљпњљ…ҐпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљЋЉпњљпњљпњљ“їпњљ÷Єпњљпњљй°£
+    int storyLine12ForYou;  //пњљпњљпњљпњљпњљ√≤пњљпњљпњљпњљпњљпњљ“≤пњљпњљпњљпњљ–єпњљпњљпњљпњљпњљпњљлЈ®пњљпњљ
+    int storyLine13ForYou;  //»їпњљпњљпњљпњљ÷™пњљпњљќ™ ≤√іпњљпњљпњљпњљпњљпњљпњљпњљ»іпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ÷Єпњљпњљй°£
+    int storyLine14ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ“≤пњљ√£пњљ“™пњљпњљ“≤пњљ’°пњљ
+    int storyLine15ForYou;  //пњљпњљпњљпњљпњљ«°пњљпњљпњљпњљЏіпњљ÷Ѓпњљпњљпњљ“±пњљЋ≠пњљпњљѕ£пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ“їпњљпњљпњљпњљпњљпњљ–¶пњљ’°пњљ
+    int storyLine16ForYou;  //пњљ“≤пњљпњљпњљ»•пњљпњљпњљпњљпњљпњљ–©пњљпњљ
+    int storyLine17ForYou;  //пњљпњљѕ≤пњљпњљпњљпњљпњљпњљ
+    int storyLine18ForYou;  //пњљпњљпњљпњљпњљпњљ“ї÷±пњљпњљпњљпњљѕ≤пњљпњљпњљ≈µƒ°пњљ
+    int storyLine19ForYou;  //“≤пњљпњљпњљпњљпњљпњљ”∞пњљпњљпњљпњљ ±пњљпњљ Љпњљпњљпњљ“Њпњљѕ≤пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine20ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ»£пњљпњљпњљпњљпњљ÷Ѓпњљпњљпњљпњљпњљпњљƒїпњљпњљпњљпњља£ђпњљпњљпњљпњљпњљпњљпњљпњљпњљ ±пњљпњљпњљ“їпњљпњљпњљ”Јпњљпњљ…°пњљ
+    int storyLine21ForYou;  //“≤пњљпњљпњљпњљпњљпњљпњљ«їпњљпњљпњљпњљпњљпњљ÷єпњљѕµпњљпњљ ±пњљпњљпњљ“≤пњљ÷™пњљпњљпњљпњљпњљпњљЌґпњљпњљпњљпњљпњљпњљпњљпњљЋЇ√Є–°пњљ
+    int storyLine22ForYou;  //пњљпњљЌ£пњљЋ£пњљпњљЏіпњљпњљпњљ…Ґ»•÷Ѓпњљпњљ“Ђпњљџµпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ¬°пњљ
+    int storyLine23ForYou;  //пњљпњљ∆ђпњљпњљпњљв£ђпњљпњљпњљпњљпњљпњљЌї»їпњљпњљпњљпњљпњљƒ°пњљ
+    int storyLine24ForYou;  //пњљпњљпњљ«Ї№Њпњљ÷Ѓ«∞пњљпњљЌ£пњљпњљпњљпњљпњљпњљпњљпњљпњљЋ°пњљ
+    int storyLine25ForYou;  //пњљ–ЊпњљпњљпњљпњљпњљпњљƒЄпњљпњљй£ђпњљпњљпњљпњљ–©пњљпњљпњљпњљ“≤пњљпњљ–©пњљпњљпњљ∆°пњљ
+    int storyLine26ForYou;  //пњљпњљ µ“ї÷±пњљпњљпњљпњљпњљ≈£пњљ÷ї“™пњљѕ∞пњљ“їпњљпњљпњљпњљ Іпњљпњљпњљпњљпњљ«±пњљпњљпњљ”њпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine27ForYou;  //пњљ–Њпњљпњљпњљпњљпњљпњљпњљ µ“≤пњљпњљпњљпњљпњљпњљќ™пњљпњљ єпњљ‘Љпњљпњљпњљпњљпњљпњљв≤їпњљпњљЋЉпњљпњљƒЄпњљпњљпњљпњљпњљ“µпњљ“їпњљпњљпњљпњљпњљпњљпњљпњљпњљ—°пњљ
+    int storyLine28ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ»±пњљўµƒ±пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine29ForYou;  //»•пњљпњљпњљпњљпњљ√∞…°пњљ
+    int storyLine30ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine31ForYou;  //пњљпњљпњљ√≤пњљпњљпњљпњљЋ°пњљ
+    int storyLine32ForYou;  //пњљ—Њпњљпњљпњљ»•пњљпњљпњљпњљ
+    int storyLine33ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine34ForYou;  //пњљ“≤пњљпњљ‘ЊпњљпњљЎ£пњљпњљпњљпњљпњљпњљЋЇЏ∞е°£
+    int storyLine35ForYou;  //»°пњљпњљ“ї÷Іпњљџ± °пњљпњљпњљпњљЎєпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ—Њпњљ–іпњљпњљпњљЋ°пњљ
+    int storyLine36ForYou;  //пњљпњљпњљпњљѕ≤пњљпњљпњљг°ї
+    int storyLine37ForYou;  //пњљпњљ…Ђпњљпњљпњљ÷£пњљпњљЏЇЏ∞пњљпњљѕ£пњљпњљ«≥пњљпњљпњљпњљџ°пњљ
+    int storyLine38ForYou;  //пњљпњљѕ≤пњљпњљпњљг°£
+    int storyLine39ForYou;  //пњљ»µпњљ–іпњљпњљпњљвЉЄпњљпњљпњљ÷£пњљпњљ“≤≈µпњљ“їпњљќґпњљпњљпњљЁЄпњљпњљпњљпњљпњљпњљпњљ µпњљ–°пњљ
+    int storyLine40ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ„≥пњљџ°пњљ
+    int storyLine41ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine42ForYou;  //пњљг°ҐпњљпњљпњљЋ£пњљпњљпњљпњљ«≤пњљпњљпњљпњљ…°пњљ
+    int storyLine43ForYou;  //пњљѕЊпњљпњљпњљпњљпњљ«Єпњљ ±пњљпњљпњљпњљпњљпњље≤їЌђпњљпњљ
+    int storyLine44ForYou;  //пњљпњљ ±пњљпњљпњљ≈њпњљпњљЋ°пњљ
+    int storyLine45ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine46ForYou;  //пњљпњљпњљпњљпњљпњљ
+    int storyLine47ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine48ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ’Њпњљпњљпњљпњљпњљп°£
+    int storyLine49ForYou;  //пњљпњљпњљпњљпњљЏ∞пњљпњљпњљпњљпњљ
+    int storyLine50ForYou;  //пњљпњљпњљпњљпњљЏ∞пњљпњљпњљпњљпњљпњљпњљ
+    int storyLine51ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ»їпњљЎњпњљпњљ≈ЇЏ∞пњљпњљѕµпњљпњљпњљпњљ÷£пњљпњљ‘Љпњљ–іпњљпњљпњљпњљ–©пњљ÷µпњљпњљ“°пњљ
+    int storyLine52ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine53ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine54ForYou;  //пњљпњљпњљпњљ«∞пњљпњљпњљѕ≥пњљпњљпњљпњљпњљпњљпњљ ±пњљт°≠°пњљпњљпњљ
+    int storyLine55ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ ±пњљпњљпњљЏЇЏ∞пњљпњљпњљ“≤пњљ–Їпњљпњљпњљ“їпњљпњљпњљпњљпњљџµƒЉпњљпњљпњљпњљпњљпњљЎ°пњљ
+    int storyLine56ForYou;  //пњљпњљпњљ«Єпњљпњљпњљ‘≠пњљпњљпњљ«єпњљпњљпњљпњљпњљ–іпњљƒ∞пњљпњљпњљ
+    int storyLine57ForYou;  //пњљпњљпњљ≈°пњљпњљпњљпњљпњљ
+    int storyLine58ForYou;  //пњљпњљпњљпњљпњљ«°пњљпњљпњљ ≤√іпњљпњљЋЉпњљЎ£пњљпњљпњљ
+    int storyLine59ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine60ForYou;  //пњљпњљпњљпњљпњљг°≠пњљпњљпњљпњљпњљпњљпњљ…°пњљ
+    int storyLine61ForYou;  //пњљпњљпњљпњљ–іпњљпњљЋ≠пњљпњљпњљЎ£пњљпњљпњљ
+    int storyLine62ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine63ForYou;  //пњљпњљћЂпњљпњљ:
+    int storyLine64ForYou;  //пњљпњљпњљпњљпњљпњљ«∞пњљпњљпњљпњљ“їпњљпњљпњљпњљ
+    int storyLine65ForYou;  //пњљпњљ–іпњљпњљпњљпњљƒ°пњљ
+    int storyLine66ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine67ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine68ForYou;  //пњљпњљпњљпњљ
+    int storyLine69ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine70ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine71ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine72ForYou;  //пњљпњљпњљ¬°пњљпњљпњљпњљ√£пњљпњљпњљ
+    int storyLine73ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine74ForYou;  //пњљпњљпњљпњљ ЉпњљпњљЌ£пњљЎ≥пњљпњљпњљпњљпњљ
+    int storyLine75ForYou;  //пњљпњљпњљпњљпњљ√°пњљпњљпњљпњљпњљ
+    int storyLine76ForYou;  //÷±пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљЌ£пњљпњљпњљпњљќ™÷єпњљпњљпњљпњљ“ї÷±пњљпњљпњљпњљ‘≠пњљЎµпњљпњљ≈°пњљ
+    int storyLine77ForYou;  //пњљ√≥пњљпњљпњљпњљ√ЈпњљпњљЏљпњљпњљпњљпњљпњљпњљ…°пњљпњљпњљпњљпњљпњљпњљпњљ–°пњљпњљпњљпњљћ§пњљѕєпњљЌЊпњљпњљ
+    int storyLine78ForYou;  //пњљ№њм£ђпњљпњљ…Ґпњљмњ™пњљпњљћЂпњљпњљпњљƒєпњљпњљпњљпњљпњљпњљпњљЋіпњљЎ°пњљ
+    int storyLine79ForYou;  //пњљпњљпњљпњљ
+    int storyLine80ForYou;  //пњљпњљпњљ√£пњљпњљпњљпњљпњљЌЈпњљпњљпњљѕµпњљпњљпњљпњљ“≤пњљпњљпњљпњље≥ЇЌЄпњљпњљпњљпњљ
+    int storyLine81ForYou;  //пњљпњљпњљпњљЌ£пњљпњљпњљЎ°пњљпњљпњљпњљпњљ
+    int storyLine82ForYou;  //пњљпњљпњљ≈°пњљ
+    int storyLine83ForYou;  //¬ЈпњљѕµƒїпњљЋЃпњљ‘Љпњљ÷¶“ґпњљѕµпњљпњљпњљ¬ґпњљпњљпњљпњљпњљпњљƒєпњљ√Ґпњљпњљпњљпњљ√і“Ђпњљџ°пњљ
+    int storyLine84ForYou;  //пњљпњљпњљпњљ“≤пњљпњљпњљпњљпњљ≈≥пњљпњљпњљ…°пњљпњљпњљпњљпњљ∆Љпњљпњљпњљ«∞пњљ–°пњљ
+    int storyLine85ForYou;  //пњљпњљпњљпњљпњљпњљпњљЏ£пњљпњљпњљпњљпњљ“їпњљпњљ ≤√іпњљпњљпњљƒ±пњљпњљпњљпњљЎ°пњљ
+    int storyLine86ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљƒЈпњљ љпњљпњљпњљпњљпњљпњљпњљ‘Љпњљпњљпњљпњљпњљпњљв°£
+    int storyLine87ForYou;  //÷±пњљ”ЄпњљпњљпњљпњљпњљЋµпњљпњљѕ≤пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљЋ°пњљ
+    int storyLine88ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљЏµЎ°пњљ
+    int storyLine89ForYou;  //пњљпњљЋµпњљпњљпњљпїєпњљпњљпњљпњљ–©пњљёЈпњљпњљпњљ»їпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ÷і…°Ќђпњљ–£пњљпњљпњљ–©пњљпњљпњљпњљ“≤“їпњљпњљ“їпњљпњљпњљпњљпњљ…ҐпњљЋ°пњљ
+    int storyLine90ForYou;  //пњљ“≤пњљпњљпњљпњљпњљпњљƒ£пњљпњљпњљпњљпњљпњљпњљпњљ‘Љпњљпњљпњљпњљпњљпњљƒґпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine91ForYou;  //пњљпњљпњљ«£пњљ“≤пњљпњљпњљпњљ»Ђпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ”°пњљпњљЋ≤пњљд°£
+    int storyLine92ForYou;  //пњљпњљпњљз£ђпњљпњљпњљпњљуњіµпњљпњљпњљ’Єпњљпњљ÷µƒ≤ Їпњљ ±пњљпњљ
+    int storyLine93ForYou;  //пњљпњљпњљз£ђпњљпњљпњљпњљпњљƒєпњљ¬Јпњљѕ£пњљ»іпњљ‘Њ…ґпњљпњљЋєпњљпњљпњљ“ї…° ±пњљпњљ
+    int storyLine94ForYou;  //пњљпњљпњљЋµпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљЋЉпњљпњљпњљпњљЎЇпњљпњљпњљпњљпњљ“їпњљпњљ
+    int storyLine95ForYou;  //пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљЋ≤пњљд°£
+    int storyLine96ForYou;  //пњљ№ґпњљпњљпњљ÷Ѓпњљпњљпњљпњљпњљпњљ“їпњљпњљпњљпњљпњљпњљпњљпњљпњљЏЇпњљпњљпњљпњљпњљпњљ
+    int storyLine97ForYou;  //пњљпњљпњљпњљпњљпњљпњљ‘±яµпњљпњљпњљпњљпњљЌї»їЌ£пњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine98ForYou;  //пњљпњљпњљ”µЎњпњљпњљпњљпњљ“°пњљ
+    int storyLine99ForYou;  //пњљпњљпњљпњљ№≥пњљ µпњљпњљ
+    int storyLine100ForYou; //–°–°пњљпњљ…°пњљ∆Їпњљпњљпњљ“™пњљ÷≤пњљ„°пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљЋ°пњљ
+    int storyLine101ForYou; //пњљпњљпњљпњљпњљпњљ“™пњљпњљ÷є ≤√і“їпњљпњљпњљпњљпњљпњљпњљ«µƒЊпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine102ForYou; //пњљ№ґпњљпњљпњљ÷Ѓпњљпњљпњљпњљ“їпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ
+    int storyLine103ForYou; //пњљпњљ“їпњљм£ђпњљ“Їпњљпњљпњљпњљ√≥пњљќ™пњљпњљпњљпњљпњљЋ°пњљ
+    int storyLine104ForYou; //пњљпњљпњљпњљпњљпњљпњљпњљ“™пњљпњљпњљпњљпњљпњљпњљƒ∞пњљпњљпњљпњљпњљ
+    int storyEnd;           //пњљпњљпњљпњљпњљ«єпњљпњљ¬µƒљпњљќ≤пњљпњљпњљпњљпњљпњљгњіпњљпњљпњљпњљпњљ«µпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљƒґпњљ
 }
-void printBoard(void)//іт”°board[12][12]
+void printBoard(void) //пњљпњљ”°board[12][12]
 {
     char visualBoard[BOARD_SIZE][BOARD_SIZE] = {0};
     for (int i = 0; i < BOARD_SIZE; i++)
@@ -678,32 +677,32 @@ BOOL isInBound(int x, int y)
 }
 BOOL isMine(int x, int y)
 {
-    return board[x][y]==meFlag;
+    return board[x][y] == meFlag;
 }
-BOOL isWhoseInThisBoard(int x, int y,char thisBoard[BOARD_SIZE][BOARD_SIZE],int whose_flag)
+BOOL isWhoseInThisBoard(int x, int y, char thisBoard[BOARD_SIZE][BOARD_SIZE], int whose_flag)
 {
-    return thisBoard[x][y]==whose_flag;
+    return thisBoard[x][y] == whose_flag;
 }
 BOOL place(int x, int y, OPTION option, int currentFlag)
 {
-    // “∆ґѓ÷Ѓ«∞µƒќї÷√√ї”–ќ“Јљ∆е„”
+    // пњљ∆ґпњљ÷Ѓ«∞пњљпњљќїпњљпњљ√їпњљпњљпњљ“Јпњљпњљпњљпњљпњљ
     if (board[x][y] != currentFlag)
     {
         return FALSE;
     }
     int new_x = x + DIR[option][0];
     int new_y = y + DIR[option][1];
-    // “∆ґѓ÷ЃЇуµƒќї÷√≥ђ≥ц±яљз, їт’я≤ї «њ’µЎ
+    // пњљ∆ґпњљ÷Ѓпњљпњљпњљќїпњљ√≥пњљпњљпњљпњљяљпњљ, пњљпњљпњљя≤пњљпњљ«њ’µпњљ
     if (!isInBound(new_x, new_y) || board[new_x][new_y] != EMPTY)
     {
         return FALSE;
     }
     board[x][y] = EMPTY;
     board[new_x][new_y] = currentFlag;
-    int cur_otherFlag = 3 - currentFlag;//‘ЏЇѓ э÷–ћбє©µ±«∞ґ‘√жµƒ∆е„”—’…Ђ
-    // ћф
-    int intervention_dir[4][2] = { {1, 0}, {0, 1}, {1, 1}, {1, -1} };
-    for (int i = 0; i < 4; i++)//ґ‘”ЏЋƒЄцЈљѕтљш––ћфµƒ≈–ґѕ
+    int cur_otherFlag = 3 - currentFlag; //пњљЏЇпњљпњљпњљпњљпњљпњљбє©пњљпњљ«∞пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ…Ђ
+    // пњљпњљ
+    int intervention_dir[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
+    for (int i = 0; i < 4; i++) //пњљпњљпњљпњљпњљƒЄпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ–ґпњљ
     {
         int x1 = new_x + intervention_dir[i][0];
         int y1 = new_y + intervention_dir[i][1];
@@ -715,9 +714,9 @@ BOOL place(int x, int y, OPTION option, int currentFlag)
             board[x2][y2] = currentFlag;
         }
     }
-    // Љ–
-    int custodian_dir[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
-    for (int i = 0; i < 8; i++)//ґ‘”Џ∞ЋЄцЈљѕтљш––Љ–µƒ≈–ґѕ
+    // пњљпњљ
+    int custodian_dir[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+    for (int i = 0; i < 8; i++) //пњљпњљпњљЏ∞ЋЄпњљпњљпњљпњљпњљпњљпњљ–Љ–µпњљпњљ–ґпњљ
     {
         int x1 = new_x + custodian_dir[i][0];
         int y1 = new_y + custodian_dir[i][1];
@@ -733,18 +732,18 @@ BOOL place(int x, int y, OPTION option, int currentFlag)
 }
 /**
  * YOUR CODE BEGIN
- * ƒгµƒіъ¬лњ™ Љ
+ * пњљпњљƒіпњљпњљлњ™ Љ
  */
 
 /**
  * You can define your own struct and variable here
- * ƒгњ…“‘‘Џ’вјпґ®“еƒг„‘ЉЇµƒљбєєћеЇЌ±дЅњ
+ * пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпґ®пњљпњљпњљпњљпњљ‘ЉпњљпњљƒљбєєпњљпњљЌ±пњљпњљпњљ
  */
-void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BOARD_SIZE])
+void searchPlace(int new_x, int new_y, int this_flag, char thisBoard[BOARD_SIZE][BOARD_SIZE])
 {
-    int anotherFlag=3-this_flag;
-    // ћф
-    int intervention_dir[4][2] = { {1, 0}, {0, 1}, {1, 1}, {1, -1} };
+    int anotherFlag = 3 - this_flag;
+    // пњљпњљ
+    int intervention_dir[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
     for (int i = 0; i < 4; i++)
     {
         int x1 = new_x + intervention_dir[i][0];
@@ -758,8 +757,8 @@ void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BO
         }
     }
 
-    // Љ–
-    int custodian_dir[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
+    // пњљпњљ
+    int custodian_dir[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
     for (int i = 0; i < 8; i++)
     {
         int x1 = new_x + custodian_dir[i][0];
@@ -768,30 +767,28 @@ void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BO
         int y2 = new_y + custodian_dir[i][1] * 2;
         if (isInBound(x1, y1) && isInBound(x2, y2) && thisBoard[x2][y2] == this_flag && thisBoard[x1][y1] == anotherFlag)
         {
-            thisBoard[x1][y1] =this_flag;
+            thisBoard[x1][y1] = this_flag;
         }
     }
-
 }
 /**
- * ƒгњ…“‘‘Џ’вјп≥х ЉїѓƒгµƒAI
+ * пњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ ЉпњљпњљпњљпњљпњљAI
  */
 void initAI(int me)
 {
-
 }
 
 /**
- * ¬÷µљƒг¬д„”°£
- * ∆е≈ћ…ѕ0±н Њњ’∞„£ђ1±н ЊЇЏ∆е£ђ2±н Њ∞„∆м
- * me±н ЊƒгЋщіъ±нµƒ∆е„”(1їт2)
- * ƒг–и“™ЈµїЎ“їЄцљбєєћеCommand£ђ‘Џx ф–‘ЇЌy ф–‘ћо…ѕƒгѕл“™“∆ґѓµƒ∆е„”µƒќї÷√£ђoptionћо…ѕƒгѕл“™“∆ґѓµƒЈљѕт°£
+ * пњљ÷µпњљпњљпњљпњљпњљпњљ”°пњљ
+ * пњљпњљпњљпњљпњљпњљ0пњљпњљ Њпњљ’∞„£пњљ1пњљпњљ Њпњљпњљпњље£ђ2пњљпњљ Њпњљпњљпњљпњљ
+ * meпњљпњљ Њпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ(1пњљпњљ2)
+ * пњљпњљпњљпњљ“™пњљпњљпњљпњљ“їпњљпњљпњљбєєпњљпњљCommandпњљпњљпњљпњљxпњљпњљпњљ‘Їпњљyпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ“™пњљ∆ґпњљпњљпњљпњљпњљпњљ”µпњљќїпњљ√£пњљoptionпњљпњљпњљпњљпњљпњљпњљпњљ“™пњљ∆ґпњљпњљƒЈпњљпњљпњљ
  */
 struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
 {
     /*
-     * TODO£Ї‘Џ’вјп–іѕ¬ƒгµƒAI°£
-     * ’вјп”–“їЄц ЊјэAI£ђЋь÷їїб—∞’“µЏ“їЄцњ…ѕ¬µƒќї÷√љш––¬д„”°£
+     * TODOпњљпњљпњљпњљпњљпњљпњљпњљ–іпњљпњљпњљпњљпњљAIпњљпњљ
+     * пњљпњљпњљпњљпњљпњљ“їпњљпњљ ЊпњљпњљAIпњљпњљпњљпњљ÷їпњљпњљ—∞пњљ“µпњљ“їпњљпњљпњљпњљпњљ¬µпњљќїпњљ√љпњљпњљпњљпњљпњљпњљ”°пњљ
      */
 
     struct Command preferedPos = findValidPos(board, me);
@@ -799,44 +796,44 @@ struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
     return preferedPos;
 }
 /**
- * ƒгµƒіъ¬лљб ш
+ * пњљпњљƒіпњљпњљпњљпњљпњљпњљ
  */
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
     //srand((unsigned)time(NULL));
     //printf("%d\n",movesInMatch);
     showStory();
-    int option_X=0;//rand()%3;
+    int option_X = 0; //rand()%3;
     //int option_Y=1;//rand()%3;
     char currentBoard[BOARD_SIZE][BOARD_SIZE];
-    if (movesInMatch==0&&meFlag==1)
+    if (movesInMatch == 0 && meFlag == 1)
     {
-        if (option_X==3)
+        if (option_X == 3)
         {
-            command.x=9;
-            command.y=8;
-            command.option=0;
+            command.x = 9;
+            command.y = 8;
+            command.option = 0;
         }
-        if (option_X==2)
+        if (option_X == 2)
         {
-            command.x=9;
-            command.y=9;
-            command.option=4;
+            command.x = 9;
+            command.y = 9;
+            command.option = 4;
         }
-        if (option_X==1)
+        if (option_X == 1)
         {
-            command.x=5;
-            command.y=3;
-            command.option=5;
+            command.x = 5;
+            command.y = 3;
+            command.option = 5;
         }
-        if (option_X==0)
+        if (option_X == 0)
         {
-            command.x=9;
-            command.y=7;
-            command.option=4;
+            command.x = 9;
+            command.y = 7;
+            command.option = 4;
         }
     }
-    if (movesInMatch==0&&meFlag==2)
+    if (movesInMatch == 0 && meFlag == 2)
     {
         /*
         if (otherX==9&&otherY==8&&otherOption==4)
@@ -852,9 +849,9 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
             command.option=6;
         }
         */
-        command.x=6;
-        command.y=8;
-        command.option=1;
+        command.x = 6;
+        command.y = 8;
+        command.option = 1;
 
         /*
         if (option_Y==1)
@@ -871,13 +868,13 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
         }
         */
     }
-    if (movesInMatch==1&&meFlag==1)
+    if (movesInMatch == 1 && meFlag == 1)
     {
-        if (option_X==0)
+        if (option_X == 0)
         {
-            command.x=3;
-            command.y=9;
-            command.option=6;
+            command.x = 3;
+            command.y = 9;
+            command.option = 6;
         }
     }
     /*
@@ -897,16 +894,16 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
         }
     }
     */
-    if (movesInMatch!=0)
+    if (movesInMatch != 0)
     {
-        for (int i=0; i<BOARD_SIZE; i++)
+        for (int i = 0; i < BOARD_SIZE; i++)
         {
-            for (int j=0; j<BOARD_SIZE; j++)
+            for (int j = 0; j < BOARD_SIZE; j++)
             {
-                currentBoard[i][j]=board[i][j];
+                currentBoard[i][j] = board[i][j];
             }
         }
-        AlphaBeta(searchDepth,-999999,9999999,currentBoard,meFlag);
+        AlphaBeta(searchDepth, -999999, 9999999, currentBoard, meFlag);
     }
     movesInMatch++;
     //printf("%d\n",movesInMatch);
@@ -915,21 +912,21 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
 {
     srand((unsigned)time(NULL));
-    int i;//x„ш±к
-    int j;//y„ш±к
-    //int dire;//„я„”Јљѕт
-    int s=0;
-    int smak=0;
-    int syek=0;
-    float form=0;//’у–ЌѕаєЎ
-    int myDangerousDisks=0;//ќ“µƒќ£ѕ’∆е„”
-    int othersDangerousDisks=0;//ґ‘Јљµƒќ£ѕ’∆е„”
-    int gather=0;
+    int i; //xпњљпњљпњљпњљ
+    int j; //yпњљпњљпњљпњљ
+    //int dire;//пњљпњљпњљ”Јпњљпњљпњљ
+    int s = 0;
+    int smak = 0;
+    int syek = 0;
+    float form = 0;               //пњљпњљпњљпњљпњљпњљпњљ
+    int myDangerousDisks = 0;     //пњљ“µпњљќ£пњљпњљпњљпњљпњљпњљ
+    int othersDangerousDisks = 0; //пњљ‘Јпњљпњљпњљќ£пњљпњљпњљпњљпњљпњљ
+    int gather = 0;
     int finalScore;
     //int ii;
     //int jj;
-    //int k;//ћфЉ–ќї≈–ґѕ±дЅњ1
-    //int rand_flag=0;//ЋжїъћфЉ–ќї≈–ґ®
+    //int k;//пњљпњљпњљпњљќїпњљ–ґѕ±пњљпњљпњљ1
+    //int rand_flag=0;//пњљпњљпњљпњљпњљпњљпњљќїпњљ–ґпњљ
     //int temp;
     //int randf[3]={999,999,999};
     //int valueb=0;
@@ -953,30 +950,30 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
     //float e;
     //float eother;
     //float efinal;
-    for (i=0; i<BOARD_SIZE; i++)
+    for (i = 0; i < BOARD_SIZE; i++)
     {
-        for (j=0; j<BOARD_SIZE; j++)
+        for (j = 0; j < BOARD_SIZE; j++)
         {
-            if (isWhoseInThisBoard(i,j,thisBoard,meFlag)==1)
+            if (isWhoseInThisBoard(i, j, thisBoard, meFlag) == 1)
             {
                 s++;
-                if (meFlag==1)
+                if (meFlag == 1)
                 {
-                    gather=gather+(i-6)*(i-6)+(j-7)*(j-7);
+                    gather = gather + (i - 6) * (i - 6) + (j - 7) * (j - 7);
                 }
-                if (meFlag==2)
+                if (meFlag == 2)
                 {
-                    gather=gather+(i-5)*(i-5)+(j-4)*(j-4);
+                    gather = gather + (i - 5) * (i - 5) + (j - 4) * (j - 4);
                 }
                 //valueb=valueb+valueboard[i][j];
-                if(isWhoseInThisBoard(i+1,j+3,thisBoard,meFlag)==1)//3*2ґ‘љ«ѕя
-                    form=form+6;
-                if(isWhoseInThisBoard(i-1,j+3,thisBoard,meFlag)==1)
-                    form=form+6;
-                if(isWhoseInThisBoard(i+3,j-1,thisBoard,meFlag)==1)
-                    form=form+6;
-                if(isWhoseInThisBoard(i-3,j-1,thisBoard,meFlag)==1)
-                    form=form+6;
+                if (isWhoseInThisBoard(i + 1, j + 3, thisBoard, meFlag) == 1) //3*2пњљ‘љпњљпњљпњљ
+                    form = form + 6;
+                if (isWhoseInThisBoard(i - 1, j + 3, thisBoard, meFlag) == 1)
+                    form = form + 6;
+                if (isWhoseInThisBoard(i + 3, j - 1, thisBoard, meFlag) == 1)
+                    form = form + 6;
+                if (isWhoseInThisBoard(i - 3, j - 1, thisBoard, meFlag) == 1)
+                    form = form + 6;
                 /*
                 randf[0]=999;
                 randf[1]=999;
@@ -1001,7 +998,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                     dire=randf[ii];
                     if (isWhoseInThisBoard(i+DIR[dire][0],j+DIR[dire][1],thisBoard,0)==1)
                     {
-                        for (k = 0; k < 4; k++)//ґ‘”ЏЋƒЄцЈљѕтљш––ћфµƒ≈–ґѕ
+                        for (k = 0; k < 4; k++)//пњљпњљпњљпњљпњљƒЄпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ–ґпњљ
                         {
                             int x1 = i+DIR[dire][0] + intervention_dir[k][0];
                             int y1 = j+DIR[dire][1] + intervention_dir[k][1];
@@ -1012,7 +1009,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                                 smak=smak+2.4;
                             }
                         }
-                        for (k = 0; k < 8; k++)//ґ‘”Џ∞ЋЄцЈљѕтљш––Љ–µƒ≈–ґѕ
+                        for (k = 0; k < 8; k++)//пњљпњљпњљЏ∞ЋЄпњљпњљпњљпњљпњљпњљпњљ–Љ–µпњљпњљ–ґпњљ
                         {
                             int x1 = i+DIR[dire][0] + custodian_dir[k][0];
                             int y1 = j+DIR[dire][1] + custodian_dir[k][1];
@@ -1045,22 +1042,22 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                                 }
                 */
                 /*
-                x[s-1]=i;// ’ЉѓЈљ≤о эЊЁ£ђ„ш±кx
-                y[s-1]=j;// ’ЉѓЈљ≤о эЊЁ£ђ„ш±кy
+                x[s-1]=i;//пњљ’ЉпњљпњљпњљпњљпњљпњљпњљпњљЁ£пњљпњљпњљпњљпњљx
+                y[s-1]=j;//пњљ’ЉпњљпњљпњљпњљпњљпњљпњљпњљЁ£пњљпњљпњљпњљпњљy
                 sumx=sumx+i;
                 sumy=sumy+j;
                 */
             }
-            if (isWhoseInThisBoard(i,j,thisBoard,otherFlag)==1)
+            if (isWhoseInThisBoard(i, j, thisBoard, otherFlag) == 1)
             {
-                if(isWhoseInThisBoard(i+1,j+1,thisBoard,meFlag)==1||isWhoseInThisBoard(i-1,j-1,thisBoard,meFlag)==1||isWhoseInThisBoard(i+1,j-1,thisBoard,meFlag)==1||isWhoseInThisBoard(i-1,j+1,thisBoard,meFlag)==1)//3*2ґ‘љ«ѕя
-                    form=form+2;
-                x=i;
-                y=j;
-                if((thisBoard[x-1][y]==0&&thisBoard[x-2][y]==(otherFlag)&&(thisBoard[x-1][y-1]==meFlag||thisBoard[x-1][y+1]==meFlag||thisBoard[x][y-1]==meFlag||thisBoard[x][y+1]==meFlag||thisBoard[x-2][y+1]==meFlag||thisBoard[x-2][y-1]==meFlag))||(thisBoard[x][y+1]==0&&thisBoard[x][y+2]==(otherFlag)&&(thisBoard[x-1][y]==meFlag||thisBoard[x+1][y]==meFlag||thisBoard[x-1][y+1]==meFlag||thisBoard[x+1][y+1]==meFlag||thisBoard[x-1][y+2]==meFlag||thisBoard[x+1][y+2]==meFlag))||(thisBoard[x+1][y+1]==0&&thisBoard[x+2][y+2]==(otherFlag)&&(thisBoard[x+1][y]==meFlag||thisBoard[x+2][y]==meFlag||thisBoard[x+2][y+1]==meFlag||thisBoard[x][y+1]==meFlag||thisBoard[x][y+2]==meFlag||thisBoard[x+1][y+2]==meFlag))||(thisBoard[x+1][y-1]==0&&thisBoard[x+2][y-2]==(otherFlag)&&(thisBoard[x][y-1]==meFlag||thisBoard[x+2][y-1]==meFlag||thisBoard[x+1][y-2]==meFlag||thisBoard[x][y-2]==meFlag||thisBoard[x+1][y]==meFlag||thisBoard[x+2][y]==meFlag)))
-                    smak=smak+3;
-                if((thisBoard[x-1][y-1]==meFlag&&thisBoard[x+1][y+1]==0&&(thisBoard[x+1][y]==meFlag||thisBoard[x+1][y+2]==meFlag||thisBoard[x][y+1]==meFlag||thisBoard[x][y+2]==meFlag||thisBoard[x+2][y+1]==meFlag||thisBoard[x+2][y]==meFlag||thisBoard[x+2][y+2]==meFlag))||(thisBoard[x-1][y]==meFlag&&thisBoard[x+1][y]==0&&(thisBoard[x+1][y-1]==meFlag||thisBoard[x+1][y+1]==meFlag||thisBoard[x+2][y+1]==meFlag||thisBoard[x+2][y]==meFlag||thisBoard[x+2][y-1]==meFlag||thisBoard[x][y-1]==meFlag||thisBoard[x][y+1]==meFlag))||(thisBoard[x-1][y+1]==meFlag&&thisBoard[x+1][y-1]==0&&(thisBoard[x+1][y]==meFlag||thisBoard[x+2][y]==meFlag||thisBoard[x][y-1]==meFlag||thisBoard[x+2][y-1]==meFlag||thisBoard[x+2][y-2]==meFlag||thisBoard[x+1][y-2]==meFlag||thisBoard[x][y-2]==meFlag))||(thisBoard[x][y-1]==meFlag&&thisBoard[x][y+1]==0&&(thisBoard[x+1][y+1]==meFlag||thisBoard[x-1][y+1]==meFlag||thisBoard[x-1][y+2]==meFlag||thisBoard[x][y+2]==meFlag||thisBoard[x-1][y+2]==meFlag||thisBoard[x-1][y]==meFlag||thisBoard[x+1][y]==meFlag))||(thisBoard[x+1][y+1]==meFlag&&thisBoard[x-1][y-1]==0&&(thisBoard[x-1][y]==meFlag||thisBoard[x-1][y-2]==meFlag||thisBoard[x][y-1]==meFlag||thisBoard[x][y-2]==meFlag||thisBoard[x-2][y-1]==meFlag||thisBoard[x-2][y]==meFlag||thisBoard[x-2][y-2]==meFlag))||(thisBoard[x+1][y]==meFlag&&thisBoard[x-1][y]==0&&(thisBoard[x-1][y+1]==meFlag||thisBoard[x-1][y-1]==meFlag||thisBoard[x-2][y-1]==meFlag||thisBoard[x-2][y]==meFlag||thisBoard[x-2][y+1]==meFlag||thisBoard[x][y+1]==meFlag||thisBoard[x][y-1]==meFlag))||(thisBoard[x+1][y-1]==meFlag&&thisBoard[x-1][y+1]==0&&(thisBoard[x+1][y]==meFlag||thisBoard[x-2][y]==meFlag||thisBoard[x][y+1]==meFlag||thisBoard[x-2][y+1]==meFlag||thisBoard[x-2][y+2]==meFlag||thisBoard[x-1][y+2]==meFlag||thisBoard[x][y+2]==meFlag))||(thisBoard[x][y+1]==meFlag&&thisBoard[x][y-1]==0&&(thisBoard[x-1][y-1]==meFlag||thisBoard[x+1][y-1]==meFlag||thisBoard[x+1][y-2]==meFlag||thisBoard[x][y-2]==meFlag||thisBoard[x+1][y-2]==meFlag||thisBoard[x+1][y]==meFlag||thisBoard[x-1][y]==meFlag)))
-                    syek=syek+2;
+                if (isWhoseInThisBoard(i + 1, j + 1, thisBoard, meFlag) == 1 || isWhoseInThisBoard(i - 1, j - 1, thisBoard, meFlag) == 1 || isWhoseInThisBoard(i + 1, j - 1, thisBoard, meFlag) == 1 || isWhoseInThisBoard(i - 1, j + 1, thisBoard, meFlag) == 1) //3*2пњљ‘љпњљпњљпњљ
+                    form = form + 2;
+                x = i;
+                y = j;
+                if ((thisBoard[x - 1][y] == 0 && thisBoard[x - 2][y] == (otherFlag) && (thisBoard[x - 1][y - 1] == meFlag || thisBoard[x - 1][y + 1] == meFlag || thisBoard[x][y - 1] == meFlag || thisBoard[x][y + 1] == meFlag || thisBoard[x - 2][y + 1] == meFlag || thisBoard[x - 2][y - 1] == meFlag)) || (thisBoard[x][y + 1] == 0 && thisBoard[x][y + 2] == (otherFlag) && (thisBoard[x - 1][y] == meFlag || thisBoard[x + 1][y] == meFlag || thisBoard[x - 1][y + 1] == meFlag || thisBoard[x + 1][y + 1] == meFlag || thisBoard[x - 1][y + 2] == meFlag || thisBoard[x + 1][y + 2] == meFlag)) || (thisBoard[x + 1][y + 1] == 0 && thisBoard[x + 2][y + 2] == (otherFlag) && (thisBoard[x + 1][y] == meFlag || thisBoard[x + 2][y] == meFlag || thisBoard[x + 2][y + 1] == meFlag || thisBoard[x][y + 1] == meFlag || thisBoard[x][y + 2] == meFlag || thisBoard[x + 1][y + 2] == meFlag)) || (thisBoard[x + 1][y - 1] == 0 && thisBoard[x + 2][y - 2] == (otherFlag) && (thisBoard[x][y - 1] == meFlag || thisBoard[x + 2][y - 1] == meFlag || thisBoard[x + 1][y - 2] == meFlag || thisBoard[x][y - 2] == meFlag || thisBoard[x + 1][y] == meFlag || thisBoard[x + 2][y] == meFlag)))
+                    smak = smak + 3;
+                if ((thisBoard[x - 1][y - 1] == meFlag && thisBoard[x + 1][y + 1] == 0 && (thisBoard[x + 1][y] == meFlag || thisBoard[x + 1][y + 2] == meFlag || thisBoard[x][y + 1] == meFlag || thisBoard[x][y + 2] == meFlag || thisBoard[x + 2][y + 1] == meFlag || thisBoard[x + 2][y] == meFlag || thisBoard[x + 2][y + 2] == meFlag)) || (thisBoard[x - 1][y] == meFlag && thisBoard[x + 1][y] == 0 && (thisBoard[x + 1][y - 1] == meFlag || thisBoard[x + 1][y + 1] == meFlag || thisBoard[x + 2][y + 1] == meFlag || thisBoard[x + 2][y] == meFlag || thisBoard[x + 2][y - 1] == meFlag || thisBoard[x][y - 1] == meFlag || thisBoard[x][y + 1] == meFlag)) || (thisBoard[x - 1][y + 1] == meFlag && thisBoard[x + 1][y - 1] == 0 && (thisBoard[x + 1][y] == meFlag || thisBoard[x + 2][y] == meFlag || thisBoard[x][y - 1] == meFlag || thisBoard[x + 2][y - 1] == meFlag || thisBoard[x + 2][y - 2] == meFlag || thisBoard[x + 1][y - 2] == meFlag || thisBoard[x][y - 2] == meFlag)) || (thisBoard[x][y - 1] == meFlag && thisBoard[x][y + 1] == 0 && (thisBoard[x + 1][y + 1] == meFlag || thisBoard[x - 1][y + 1] == meFlag || thisBoard[x - 1][y + 2] == meFlag || thisBoard[x][y + 2] == meFlag || thisBoard[x - 1][y + 2] == meFlag || thisBoard[x - 1][y] == meFlag || thisBoard[x + 1][y] == meFlag)) || (thisBoard[x + 1][y + 1] == meFlag && thisBoard[x - 1][y - 1] == 0 && (thisBoard[x - 1][y] == meFlag || thisBoard[x - 1][y - 2] == meFlag || thisBoard[x][y - 1] == meFlag || thisBoard[x][y - 2] == meFlag || thisBoard[x - 2][y - 1] == meFlag || thisBoard[x - 2][y] == meFlag || thisBoard[x - 2][y - 2] == meFlag)) || (thisBoard[x + 1][y] == meFlag && thisBoard[x - 1][y] == 0 && (thisBoard[x - 1][y + 1] == meFlag || thisBoard[x - 1][y - 1] == meFlag || thisBoard[x - 2][y - 1] == meFlag || thisBoard[x - 2][y] == meFlag || thisBoard[x - 2][y + 1] == meFlag || thisBoard[x][y + 1] == meFlag || thisBoard[x][y - 1] == meFlag)) || (thisBoard[x + 1][y - 1] == meFlag && thisBoard[x - 1][y + 1] == 0 && (thisBoard[x + 1][y] == meFlag || thisBoard[x - 2][y] == meFlag || thisBoard[x][y + 1] == meFlag || thisBoard[x - 2][y + 1] == meFlag || thisBoard[x - 2][y + 2] == meFlag || thisBoard[x - 1][y + 2] == meFlag || thisBoard[x][y + 2] == meFlag)) || (thisBoard[x][y + 1] == meFlag && thisBoard[x][y - 1] == 0 && (thisBoard[x - 1][y - 1] == meFlag || thisBoard[x + 1][y - 1] == meFlag || thisBoard[x + 1][y - 2] == meFlag || thisBoard[x][y - 2] == meFlag || thisBoard[x + 1][y - 2] == meFlag || thisBoard[x + 1][y] == meFlag || thisBoard[x - 1][y] == meFlag)))
+                    syek = syek + 2;
                 /*
                 randf[0]=999;
                 randf[1]=999;
@@ -1085,7 +1082,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                     dire=randf[ii];
                     if (isWhoseInThisBoard(i+DIR[dire][0],j+DIR[dire][1],thisBoard,0)==1)
                     {
-                        for (k = 0; k < 4; k++)//ґ‘”ЏЋƒЄцЈљѕтљш––ћфµƒ≈–ґѕ
+                        for (k = 0; k < 4; k++)//пњљпњљпњљпњљпњљƒЄпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљпњљ–ґпњљ
                         {
                             int x1 = i+DIR[dire][0] + intervention_dir[k][0];
                             int y1 = j+DIR[dire][1] + intervention_dir[k][1];
@@ -1096,7 +1093,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                                 smak=smak-1.5;
                             }
                         }
-                        for (k = 0; k < 8; k++)//ґ‘”Џ∞ЋЄцЈљѕтљш––Љ–µƒ≈–ґѕ
+                        for (k = 0; k < 8; k++)//пњљпњљпњљЏ∞ЋЄпњљпњљпњљпњљпњљпњљпњљ–Љ–µпњљпњљ–ґпњљ
                         {
                             int x1 = i+DIR[dire][0] + custodian_dir[k][0];
                             int y1 = j+DIR[dire][1] + custodian_dir[k][1];
@@ -1129,19 +1126,19 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                 */
 
                 //    sother++;
-                //    xother[sother-1]=i;// ’ЉѓЈљ≤о эЊЁ£ђ„ш±кx
-                //    yother[sother-1]=j;// ’ЉѓЈљ≤о эЊЁ£ђ„ш±кy
+                //    xother[sother-1]=i;//пњљ’ЉпњљпњљпњљпњљпњљпњљпњљпњљЁ£пњљпњљпњљпњљпњљx
+                //    yother[sother-1]=j;//пњљ’ЉпњљпњљпњљпњљпњљпњљпњљпњљЁ£пњљпњљпњљпњљпњљy
                 //    sumotherx=sumotherx+i;
                 //    sumothery=sumothery+j;
             }
         }
     }
-    if (s==0)
+    if (s == 0)
     {
         return -999999;
     }
     /*
-    if (1)//µ±„‘ЉЇ≤їЇ№’ЉЊЁ”≈ ∆ЊЌЊџЉѓ£®»ЂЊ÷£©
+    if (1)//пњљпњљпњљ‘Љпњљпњљпњљпњљпњљ’Љпњљпњљпњљпњљпњљ∆ЊЌЊџЉпњљпњљпњљ»Ђпњљ÷£пњљ
     {
 
         if (meFlag==1)
@@ -1156,45 +1153,45 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
         }
 
 
-        averx=sumx/s;//њ™ Љі¶јн„‘ЉЇµƒЈљ≤оx£ђ∆љЊщx
-        avery=sumy/s;//њ™ Љі¶јн„‘ЉЇµƒЈљ≤оy£ђ∆љЊщy
+        averx=sumx/s;//пњљпњљ Љпњљпњљпњљпњљпњљ‘ЉпњљпњљƒЈпњљпњљпњљxпњљпњљ∆љпњљпњљx
+        avery=sumy/s;//пњљпњљ Љпњљпњљпњљпњљпњљ‘ЉпњљпњљƒЈпњљпњљпњљyпњљпњљ∆љпњљпњљy
 
         for (i=0;i<s;i++)
         {
             ex=ex+(x[i]-averx)*(x[i]-averx);
             ey=ey+(y[i]-avery)*(y[i]-avery);
         }
-        e=ex/(s-1)+ey/(s-1);//„‘…нЈљ≤оі¶јнЌк≥…
+        e=ex/(s-1)+ey/(s-1);//пњљпњљпњљпњљпњљпњљпњљоі¶пњљпњљпњљпњљпњљ
         efinal=e-12;
     }
     */
     /*
-    if (s<=sother+2)//µ±„‘ЉЇµƒ’ЉЊЁ”≈ ∆ЊЌЊџЉѓµљґ‘Јљ£®±ї∆ъ”√£©
+    if (s<=sother+2)//пњљпњљпњљ‘Љпњљпњљпњљ’Љпњљпњљпњљпњљпњљ∆ЊЌЊџЉпњљпњљпњљпњљ‘Јпњљпњљпњљпњљпњљпњљпњљпњљ√£пњљ
     {
-        averx=sumx/s;//њ™ Љі¶јн„‘ЉЇµƒЈљ≤оx£ђ∆љЊщx
-        avery=sumy/s;//њ™ Љі¶јн„‘ЉЇµƒЈљ≤оy£ђ∆љЊщy
+        averx=sumx/s;//пњљпњљ Љпњљпњљпњљпњљпњљ‘ЉпњљпњљƒЈпњљпњљпњљxпњљпњљ∆љпњљпњљx
+        avery=sumy/s;//пњљпњљ Љпњљпњљпњљпњљпњљ‘ЉпњљпњљƒЈпњљпњљпњљyпњљпњљ∆љпњљпњљy
         for (i=0;i<s;i++)
         {
             ex=ex+(x[i]-averx)*(x[i]-averx);
             ey=ey+(y[i]-avery)*(y[i]-avery);
         }
-        e=ex/(s-1)+ey/(s-1);//„‘…нЈљ≤оі¶јнЌк≥…
-        averotherx=sumotherx/sother;//њ™ Љі¶јнґ‘ЈљµƒЈљ≤оx£ђ∆љЊщx
-        averothery=sumothery/sother;//њ™ Љі¶јнґ‘ЈљµƒЈљ≤оy£ђ∆љЊщy
+        e=ex/(s-1)+ey/(s-1);//пњљпњљпњљпњљпњљпњљпњљоі¶пњљпњљпњљпњљпњљ
+        averotherx=sumotherx/sother;//пњљпњљ Љпњљпњљпњљпњљпњљ‘ЈпњљпњљƒЈпњљпњљпњљxпњљпњљ∆љпњљпњљx
+        averothery=sumothery/sother;//пњљпњљ Љпњљпњљпњљпњљпњљ‘ЈпњљпњљƒЈпњљпњљпњљyпњљпњљ∆љпњљпњљy
         for (i=0;i<s;i++)
         {
             eotherx=eotherx+(x[i]-averotherx)*(x[i]-averotherx);
             eothery=eothery+(y[i]-averothery)*(y[i]-averothery);
         }
-        eother=eotherx/(s-1)+eothery/(s-1);//ґ‘Јљѕаґ‘”Џ„‘ЉЇµƒЈљ≤оі¶јнЌк≥…
-        efinal=3/2*e+1/2*eother;//efinal «Љў…иґ‘Јљµƒ∆љЊщќї÷√µ√≥цµƒЈљ≤о
+        eother=eotherx/(s-1)+eothery/(s-1);//пњљ‘Јпњљпњљпњљпњљпњљпњљпњљ‘ЉпњљпњљƒЈпњљпњљоі¶пњљпњљпњљпњљпњљ
+        efinal=3/2*e+1/2*eother;//efinalпњљ«Љпњљпњљпњљ‘Јпњљпњљпњљ∆љпњљпњљќїпњљ√µ√≥пњљпњљƒЈпњљпњљпњљ
     }
     */
-    finalScore=1500*s+280*smak+280*syek+190*othersDangerousDisks-40*myDangerousDisks+13*form-7*gather;
+    finalScore = 1500 * s + 280 * smak + 280 * syek + 190 * othersDangerousDisks - 40 * myDangerousDisks + 13 * form - 7 * gather;
     //printf("%d\n",finalScore);
     return finalScore;
 }
-int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SIZE],int this_flag)
+int AlphaBeta(int nPlay, int nAlpha, int nBeta, char thisBoard[BOARD_SIZE][BOARD_SIZE], int this_flag)
 {
     //printf("depth %d\n",nPlay);
     char currentBoard[BOARD_SIZE][BOARD_SIZE];
@@ -1206,46 +1203,46 @@ int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SI
     int y;
     int ii;
     int jj;
-    if(nPlay==0)
-        return searchValue(thisBoard);  //“ґ„”љЏµгЈµїЎєј÷µ
-    for (i=0; i<BOARD_SIZE; i++)
+    if (nPlay == 0)
+        return searchValue(thisBoard); //“ґпњљ”љЏµгЈµпњљЎєпњљ÷µ
+    for (i = 0; i < BOARD_SIZE; i++)
     {
-        for (j=0; j<BOARD_SIZE; j++)
+        for (j = 0; j < BOARD_SIZE; j++)
         {
-            currentBoard[i][j]=thisBoard[i][j];
+            currentBoard[i][j] = thisBoard[i][j];
         }
     }
-    for (k=0; k<=7; k++)
+    for (k = 0; k <= 7; k++)
     {
-        for (i=0; i<BOARD_SIZE; i++)
+        for (i = 0; i < BOARD_SIZE; i++)
         {
-            for (j=0; j<BOARD_SIZE; j++)
+            for (j = 0; j < BOARD_SIZE; j++)
             {
-                if (isWhoseInThisBoard(i,j,currentBoard,this_flag)==1)
+                if (isWhoseInThisBoard(i, j, currentBoard, this_flag) == 1)
                 {
-                    x=i+DIR[kk[k]][0];
-                    y=j+DIR[kk[k]][1];
-                    if (isInBound(x,y)&&currentBoard[x][y]==0)
+                    x = i + DIR[kk[k]][0];
+                    y = j + DIR[kk[k]][1];
+                    if (isInBound(x, y) && currentBoard[x][y] == 0)
                     {
-                        currentBoard[x][y]=this_flag;
-                        currentBoard[i][j]=EMPTY;
-                        searchPlace(x,y,this_flag,currentBoard);//…ъ≥…–¬љЏµг
-                        score=-AlphaBeta(nPlay-1,-nBeta,-nAlpha,currentBoard,3-this_flag);//µЁєйЋ—Ћч„”љЏµг
-                        for (ii=0; ii<BOARD_SIZE; ii++) //ї÷Єі‘≠љЏµг
+                        currentBoard[x][y] = this_flag;
+                        currentBoard[i][j] = EMPTY;
+                        searchPlace(x, y, this_flag, currentBoard);                                  //пњљпњљпњљпњљпњљ¬љЏµпњљ
+                        score = -AlphaBeta(nPlay - 1, -nBeta, -nAlpha, currentBoard, 3 - this_flag); //пњљЁєпњљпњљпњљпњљпњљпњљ”љЏµпњљ
+                        for (ii = 0; ii < BOARD_SIZE; ii++)                                          //пњљ÷Єпњљ‘≠пњљЏµпњљ
                         {
-                            for (jj=0; jj<BOARD_SIZE; jj++)
+                            for (jj = 0; jj < BOARD_SIZE; jj++)
                             {
-                                currentBoard[ii][jj]=thisBoard[ii][jj];
+                                currentBoard[ii][jj] = thisBoard[ii][jj];
                             }
                         }
                         if (score > nAlpha)
                         {
-                            nAlpha=score;
-                            if(nPlay==4)
+                            nAlpha = score;
+                            if (nPlay == 4)
                             {
-                                command.x=i;
-                                command.y=j;
-                                command.option=kk[k];
+                                command.x = i;
+                                command.y = j;
+                                command.option = kk[k];
                             }
                         }
                         if (score >= nBeta)
@@ -1257,5 +1254,5 @@ int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SI
             }
         }
     }
-    return nAlpha;//ЈµїЎ„о–°÷µ
+    return nAlpha; //пњљпњљпњљпњљпњљпњљ–°÷µ
 }

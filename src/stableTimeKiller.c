@@ -30,57 +30,56 @@ typedef int OPTION;
 
 #define START "START"
 #define PLACE "PLACE"
-#define TURN  "TURN"
-#define END   "END"
+#define TURN "TURN"
+#define END "END"
 
 struct Command
 {
-  int x;
-  int y;
-  OPTION option;
+    int x;
+    int y;
+    OPTION option;
 };
 
 char buffer[MAX_BYTE] = {0};
 char board[BOARD_SIZE][BOARD_SIZE] = {0};
 char valueboard[BOARD_SIZE][BOARD_SIZE] =
-{
-    {0,0,0,0,0,0,0,0,0,0,0,0},
-    {0,5,4,5,4,5,1,1,0,0,0,0},
-    {0,4,6,6,6,4,2,2,2,0,0,0},
-    {0,5,6,6,6,5,3,3,3,2,0,0},
-    {0,4,6,6,6,4,2,2,3,2,1,0},
-    {1,5,4,5,4,5,2,2,3,2,1,0},
-    {1,1,2,3,2,2,5,4,5,4,5,0},
-    {0,2,2,3,2,2,4,6,6,6,4,0},
-    {0,0,3,3,3,3,5,6,6,6,5,0},
-    {0,0,0,2,2,2,4,6,6,6,4,0},
-    {0,0,0,0,1,1,5,4,5,4,5,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0}
-};
+    {
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+        {0, 5, 4, 5, 4, 5, 1, 1, 0, 0, 0, 0},
+        {0, 4, 6, 6, 6, 4, 2, 2, 2, 0, 0, 0},
+        {0, 5, 6, 6, 6, 5, 3, 3, 3, 2, 0, 0},
+        {0, 4, 6, 6, 6, 4, 2, 2, 3, 2, 1, 0},
+        {1, 5, 4, 5, 4, 5, 2, 2, 3, 2, 1, 0},
+        {1, 1, 2, 3, 2, 2, 5, 4, 5, 4, 5, 0},
+        {0, 2, 2, 3, 2, 2, 4, 6, 6, 6, 4, 0},
+        {0, 0, 3, 3, 3, 3, 5, 6, 6, 6, 5, 0},
+        {0, 0, 0, 2, 2, 2, 4, 6, 6, 6, 4, 0},
+        {0, 0, 0, 0, 1, 1, 5, 4, 5, 4, 5, 0},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
 int meFlag;
 int otherFlag;
 
-int searchDepth=4;//ËÑË÷²ãÊý
+int searchDepth = 4; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
-int movesInMatch=0;
+int movesInMatch = 0;
 
-int kk[8]={4,5,6,7,0,1,2,3};
+int kk[8] = {4, 5, 6, 7, 0, 1, 2, 3};
 
 struct Command command = {0, 0, 0};
 
-const int DIR[8][2] = { {-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1} };
-int intervention_dir[4][2] = { {1, 0}, {0, 1}, {1, 1}, {1, -1} };//ÉÏÏÂ ×óÓÒ Ð±ÓÒÉÏÏÂ Ð±×óÉÏÏÂ
-int custodian_dir[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} }; //
+const int DIR[8][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}, {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+int intervention_dir[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};                                   //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ð±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+int custodian_dir[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}}; //
 
 void debug(const char *str);
 void printBoard(void);
 BOOL isInBound(int x, int y);
 BOOL isMine(int x, int y);
-int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SIZE],int this_flag);//AlphaBeta¼ôÖ¦
-int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE]);//ËÑË÷¹ÀÖµ
-BOOL isWhoseInThisBoard(int x, int y,char thisBoard[BOARD_SIZE][BOARD_SIZE],int whose_flag);//ÐéÄâÆåÅÌÀïµÄÆå×Óµ½µ×ÊÇË­µÄ£¿
-void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BOARD_SIZE]);//ÔÚÐéÄâÆåÅÌÂä×Ó²¢½áËã
+int AlphaBeta(int nPlay, int nAlpha, int nBeta, char thisBoard[BOARD_SIZE][BOARD_SIZE], int this_flag); //AlphaBetaï¿½ï¿½Ö¦
+int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE]);                                                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+BOOL isWhoseInThisBoard(int x, int y, char thisBoard[BOARD_SIZE][BOARD_SIZE], int whose_flag);          //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½ï¿½ï¿½ï¿½ï¿½Ë­ï¿½Ä£ï¿½
+void searchPlace(int new_x, int new_y, int this_flag, char thisBoard[BOARD_SIZE][BOARD_SIZE]);          //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó²ï¿½ï¿½ï¿½ï¿½ï¿½
 void initAI(int me);
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag);
 struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me);
@@ -89,15 +88,15 @@ void start(int flag);
 void turn(void);
 void end(int x);
 void loop(void);
-//ÉùÃ÷½áÊø
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 int main(int argc, char *argv[])
 {
-  loop();
-  return 0;
+    loop();
+    return 0;
 }
 void loop(void)
 {
-//  freopen("../input", "r", stdin);
+    //  freopen("../input", "r", stdin);
     while (TRUE)
     {
         memset(buffer, 0, sizeof(buffer));
@@ -146,11 +145,11 @@ void end(int x)
 }
 void turn(void)
 {
-  // AI
-  struct Command command = aiTurn((const char (*)[BOARD_SIZE])board, meFlag);
-  place(command.x, command.y, command.option, meFlag);
-  printf("%d %d %d\n", command.x, command.y, command.option);
-  fflush(stdout);
+    // AI
+    struct Command command = aiTurn((const char(*)[BOARD_SIZE])board, meFlag);
+    place(command.x, command.y, command.option, meFlag);
+    printf("%d %d %d\n", command.x, command.y, command.option);
+    fflush(stdout);
 }
 void start(int flag)
 {
@@ -171,12 +170,13 @@ void start(int flag)
     }
     initAI(flag);
 }
-void debug(const char *str) {
-  printf("DEBUG %s\n", str);
-  fflush(stdout);
+void debug(const char *str)
+{
+    printf("DEBUG %s\n", str);
+    fflush(stdout);
 }
 
-void printBoard(void)//´òÓ¡board[12][12]
+void printBoard(void) //ï¿½ï¿½Ó¡board[12][12]
 {
     char visualBoard[BOARD_SIZE][BOARD_SIZE] = {0};
     for (int i = 0; i < BOARD_SIZE; i++)
@@ -206,38 +206,38 @@ BOOL isInBound(int x, int y)
 }
 BOOL isMine(int x, int y)
 {
-    if (board[x][y]==meFlag)
+    if (board[x][y] == meFlag)
         return 1;
-    if (board[x][y]!=meFlag)
+    if (board[x][y] != meFlag)
         return 0;
 }
-BOOL isWhoseInThisBoard(int x, int y,char thisBoard[BOARD_SIZE][BOARD_SIZE],int whose_flag)
+BOOL isWhoseInThisBoard(int x, int y, char thisBoard[BOARD_SIZE][BOARD_SIZE], int whose_flag)
 {
-    if (thisBoard[x][y]==whose_flag)
+    if (thisBoard[x][y] == whose_flag)
         return 1;
-    if (thisBoard[x][y]!=whose_flag)
+    if (thisBoard[x][y] != whose_flag)
         return 0;
 }
 BOOL place(int x, int y, OPTION option, int currentFlag)
 {
-    // ÒÆ¶¯Ö®Ç°µÄÎ»ÖÃÃ»ÓÐÎÒ·½Æå×Ó
+    // ï¿½Æ¶ï¿½Ö®Ç°ï¿½ï¿½Î»ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ò·ï¿½ï¿½ï¿½ï¿½ï¿½
     if (board[x][y] != currentFlag)
     {
         return FALSE;
     }
     int new_x = x + DIR[option][0];
     int new_y = y + DIR[option][1];
-    // ÒÆ¶¯Ö®ºóµÄÎ»ÖÃ³¬³ö±ß½ç, »òÕß²»ÊÇ¿ÕµØ
+    // ï¿½Æ¶ï¿½Ö®ï¿½ï¿½ï¿½Î»ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ß½ï¿½, ï¿½ï¿½ï¿½ß²ï¿½ï¿½Ç¿Õµï¿½
     if (!isInBound(new_x, new_y) || board[new_x][new_y] != EMPTY)
     {
         return FALSE;
     }
     board[x][y] = EMPTY;
     board[new_x][new_y] = currentFlag;
-    int cur_otherFlag = 3 - currentFlag;//ÔÚº¯ÊýÖÐÌá¹©µ±Ç°¶ÔÃæµÄÆå×ÓÑÕÉ«
-    // Ìô
-    int intervention_dir[4][2] = { {1, 0}, {0, 1}, {1, 1}, {1, -1} };
-    for (int i = 0; i < 4; i++)//¶ÔÓÚËÄ¸ö·½Ïò½øÐÐÌôµÄÅÐ¶Ï
+    int cur_otherFlag = 3 - currentFlag; //ï¿½Úºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¹©ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+    // ï¿½ï¿½
+    int intervention_dir[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
+    for (int i = 0; i < 4; i++) //ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
     {
         int x1 = new_x + intervention_dir[i][0];
         int y1 = new_y + intervention_dir[i][1];
@@ -249,9 +249,9 @@ BOOL place(int x, int y, OPTION option, int currentFlag)
             board[x2][y2] = currentFlag;
         }
     }
-    // ¼Ð
-    int custodian_dir[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
-    for (int i = 0; i < 8; i++)//¶ÔÓÚ°Ë¸ö·½Ïò½øÐÐ¼ÐµÄÅÐ¶Ï
+    // ï¿½ï¿½
+    int custodian_dir[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+    for (int i = 0; i < 8; i++) //ï¿½ï¿½ï¿½Ú°Ë¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼Ðµï¿½ï¿½Ð¶ï¿½
     {
         int x1 = new_x + custodian_dir[i][0];
         int y1 = new_y + custodian_dir[i][1];
@@ -267,18 +267,18 @@ BOOL place(int x, int y, OPTION option, int currentFlag)
 }
 /**
  * YOUR CODE BEGIN
- * ÄãµÄ´úÂë¿ªÊ¼
+ * ï¿½ï¿½Ä´ï¿½ï¿½ë¿ªÊ¼
  */
 
 /**
  * You can define your own struct and variable here
- * Äã¿ÉÒÔÔÚÕâÀï¶¨ÒåÄã×Ô¼ºµÄ½á¹¹ÌåºÍ±äÁ¿
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¶¨ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä½á¹¹ï¿½ï¿½Í±ï¿½ï¿½ï¿½
  */
-void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BOARD_SIZE])
+void searchPlace(int new_x, int new_y, int this_flag, char thisBoard[BOARD_SIZE][BOARD_SIZE])
 {
-    int anotherFlag=3-this_flag;
-    // Ìô
-    int intervention_dir[4][2] = { {1, 0}, {0, 1}, {1, 1}, {1, -1} };
+    int anotherFlag = 3 - this_flag;
+    // ï¿½ï¿½
+    int intervention_dir[4][2] = {{1, 0}, {0, 1}, {1, 1}, {1, -1}};
     for (int i = 0; i < 4; i++)
     {
         int x1 = new_x + intervention_dir[i][0];
@@ -292,8 +292,8 @@ void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BO
         }
     }
 
-    // ¼Ð
-    int custodian_dir[8][2] = { {1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1} };
+    // ï¿½ï¿½
+    int custodian_dir[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
     for (int i = 0; i < 8; i++)
     {
         int x1 = new_x + custodian_dir[i][0];
@@ -302,96 +302,94 @@ void searchPlace(int new_x,int new_y,int this_flag,char thisBoard[BOARD_SIZE][BO
         int y2 = new_y + custodian_dir[i][1] * 2;
         if (isInBound(x1, y1) && isInBound(x2, y2) && thisBoard[x2][y2] == this_flag && thisBoard[x1][y1] == anotherFlag)
         {
-            thisBoard[x1][y1] =this_flag;
+            thisBoard[x1][y1] = this_flag;
         }
     }
-
 }
 /**
- * Äã¿ÉÒÔÔÚÕâÀï³õÊ¼»¯ÄãµÄAI
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½AI
  */
 void initAI(int me)
 {
-
 }
 
 /**
- * ÂÖµ½ÄãÂä×Ó¡£
- * ÆåÅÌÉÏ0±íÊ¾¿Õ°×£¬1±íÊ¾ºÚÆå£¬2±íÊ¾°×Æì
- * me±íÊ¾ÄãËù´ú±íµÄÆå×Ó(1»ò2)
- * ÄãÐèÒª·µ»ØÒ»¸ö½á¹¹ÌåCommand£¬ÔÚxÊôÐÔºÍyÊôÐÔÌîÉÏÄãÏëÒªÒÆ¶¯µÄÆå×ÓµÄÎ»ÖÃ£¬optionÌîÉÏÄãÏëÒªÒÆ¶¯µÄ·½Ïò¡£
+ * ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½Ê¾ï¿½Õ°×£ï¿½1ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½å£¬2ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
+ * meï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(1ï¿½ï¿½2)
+ * ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½á¹¹ï¿½ï¿½Commandï¿½ï¿½ï¿½ï¿½xï¿½ï¿½ï¿½Ôºï¿½yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Óµï¿½Î»ï¿½Ã£ï¿½optionï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Æ¶ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
  */
 struct Command aiTurn(const char board[BOARD_SIZE][BOARD_SIZE], int me)
 {
-  /*
-   * TODO£ºÔÚÕâÀïÐ´ÏÂÄãµÄAI¡£
-   * ÕâÀïÓÐÒ»¸öÊ¾ÀýAI£¬ËüÖ»»áÑ°ÕÒµÚÒ»¸ö¿ÉÏÂµÄÎ»ÖÃ½øÐÐÂä×Ó¡£
+    /*
+   * TODOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ï¿½ï¿½ï¿½AIï¿½ï¿½
+   * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ê¾ï¿½ï¿½AIï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½Ñ°ï¿½Òµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Î»ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½
    */
 
-  struct Command preferedPos = findValidPos(board, me);
+    struct Command preferedPos = findValidPos(board, me);
 
-  return preferedPos;
+    return preferedPos;
 }
 /**
- * ÄãµÄ´úÂë½áÊø
+ * ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
 {
     //srand((unsigned)time(NULL));
     //printf("%d\n",movesInMatch);
-    double start=clock();//Ê±ÖÓ1
-    int option_X=0;//rand()%3;
-    int option_Y=1;//rand()%3;
-	char currentBoard[BOARD_SIZE][BOARD_SIZE];
-	if (movesInMatch==0&&meFlag==1)
+    double start = clock(); //Ê±ï¿½ï¿½1
+    int option_X = 0;       //rand()%3;
+    int option_Y = 1;       //rand()%3;
+    char currentBoard[BOARD_SIZE][BOARD_SIZE];
+    if (movesInMatch == 0 && meFlag == 1)
     {
-        if (option_X==3)
+        if (option_X == 3)
         {
-            command.x=9;
-            command.y=8;
-            command.option=0;
+            command.x = 9;
+            command.y = 8;
+            command.option = 0;
         }
-        if (option_X==2)
+        if (option_X == 2)
         {
-            command.x=9;
-            command.y=9;
-            command.option=4;
+            command.x = 9;
+            command.y = 9;
+            command.option = 4;
         }
-        if (option_X==1)
+        if (option_X == 1)
         {
-            command.x=5;
-            command.y=3;
-            command.option=5;
+            command.x = 5;
+            command.y = 3;
+            command.option = 5;
         }
-        if (option_X==0)
+        if (option_X == 0)
         {
-            command.x=9;
-            command.y=7;
-            command.option=4;
+            command.x = 9;
+            command.y = 7;
+            command.option = 4;
         }
     }
-    if (movesInMatch==0&&meFlag==2)
+    if (movesInMatch == 0 && meFlag == 2)
     {
-        if (option_Y==1)
+        if (option_Y == 1)
         {
-            command.x=6;
-            command.y=7;
-            command.option=1;
+            command.x = 6;
+            command.y = 7;
+            command.option = 1;
         }
-        if (option_Y==0)
+        if (option_Y == 0)
         {
-            command.x=6;
-            command.y=8;
-            command.option=6;
+            command.x = 6;
+            command.y = 8;
+            command.option = 6;
         }
     }
-    if (movesInMatch==1&&meFlag==1)
+    if (movesInMatch == 1 && meFlag == 1)
     {
-        if (option_X==0)
+        if (option_X == 0)
         {
-            command.x=3;
-            command.y=9;
-            command.option=6;
+            command.x = 3;
+            command.y = 9;
+            command.option = 6;
         }
     }
     /*
@@ -411,45 +409,45 @@ struct Command findValidPos(const char board[BOARD_SIZE][BOARD_SIZE], int flag)
         }
     }
     */
-    if (movesInMatch!=0)
+    if (movesInMatch != 0)
     {
-        for (int i=0;i<BOARD_SIZE;i++)
+        for (int i = 0; i < BOARD_SIZE; i++)
         {
-            for (int j=0;j<BOARD_SIZE;j++)
+            for (int j = 0; j < BOARD_SIZE; j++)
             {
-                currentBoard[i][j]=board[i][j];
+                currentBoard[i][j] = board[i][j];
             }
         }
-        AlphaBeta(searchDepth,-999999,9999999,currentBoard,meFlag);
+        AlphaBeta(searchDepth, -999999, 9999999, currentBoard, meFlag);
     }
     movesInMatch++;
     //printf("%d\n",movesInMatch);
-    double end=clock();//Ê±ÖÓ2
-    //printf("time=%.2lf\n",end-start);//ÏÔÊ¾Ê±ÖÓ
-    while (end-start<1900)//ÑÓÊ±
+    double end = clock(); //Ê±ï¿½ï¿½2
+    //printf("time=%.2lf\n",end-start);//ï¿½ï¿½Ê¾Ê±ï¿½ï¿½
+    while (end - start < 1900) //ï¿½ï¿½Ê±
     {
-        end=clock();
+        end = clock();
     }
     return command;
 }
 int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
 {
     srand((unsigned)time(NULL));
-    int i;//x×ø±ê
-    int j;//y×ø±ê
-    int dire;//×ß×Ó·½Ïò
-    int s=0;
-    int smak=0;
-    int syek=0;
-    float form=0;//ÕóÐÍÏà¹Ø
-    int myDangerousDisks=0;//ÎÒµÄÎ£ÏÕÆå×Ó
-    int othersDangerousDisks=0;//¶Ô·½µÄÎ£ÏÕÆå×Ó
-    int gather=0;
+    int i;    //xï¿½ï¿½ï¿½ï¿½
+    int j;    //yï¿½ï¿½ï¿½ï¿½
+    int dire; //ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½
+    int s = 0;
+    int smak = 0;
+    int syek = 0;
+    float form = 0;               //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int myDangerousDisks = 0;     //ï¿½Òµï¿½Î£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int othersDangerousDisks = 0; //ï¿½Ô·ï¿½ï¿½ï¿½Î£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    int gather = 0;
     int finalScore;
     //int ii;
     //int jj;
-    //int k;//Ìô¼ÐÎ»ÅÐ¶Ï±äÁ¿1
-    //int rand_flag=0;//Ëæ»úÌô¼ÐÎ»ÅÐ¶¨
+    //int k;//ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ð¶Ï±ï¿½ï¿½ï¿½1
+    //int rand_flag=0;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½Ð¶ï¿½
     //int temp;
     //int randf[3]={999,999,999};
     //int valueb=0;
@@ -473,30 +471,30 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
     //float e;
     //float eother;
     //float efinal;
-    for (i=0;i<BOARD_SIZE;i++)
+    for (i = 0; i < BOARD_SIZE; i++)
     {
-        for (j=0;j<BOARD_SIZE;j++)
+        for (j = 0; j < BOARD_SIZE; j++)
         {
-            if (isWhoseInThisBoard(i,j,thisBoard,meFlag)==1)
+            if (isWhoseInThisBoard(i, j, thisBoard, meFlag) == 1)
             {
                 s++;
-                if (meFlag==1)
+                if (meFlag == 1)
                 {
-                    gather=gather+(i-6)*(i-6)+(j-7)*(j-7);
+                    gather = gather + (i - 6) * (i - 6) + (j - 7) * (j - 7);
                 }
-                if (meFlag==2)
+                if (meFlag == 2)
                 {
-                    gather=gather+(i-5)*(i-5)+(j-4)*(j-4);
+                    gather = gather + (i - 5) * (i - 5) + (j - 4) * (j - 4);
                 }
                 //valueb=valueb+valueboard[i][j];
-                if(isWhoseInThisBoard(i+1,j+3,thisBoard,meFlag)==1)//3*2¶Ô½ÇÏß
-                    form=form+6;
-                if(isWhoseInThisBoard(i-1,j+3,thisBoard,meFlag)==1)
-                    form=form+6;
-                if(isWhoseInThisBoard(i+3,j-1,thisBoard,meFlag)==1)
-                    form=form+6;
-                if(isWhoseInThisBoard(i-3,j-1,thisBoard,meFlag)==1)
-                    form=form+6;
+                if (isWhoseInThisBoard(i + 1, j + 3, thisBoard, meFlag) == 1) //3*2ï¿½Ô½ï¿½ï¿½ï¿½
+                    form = form + 6;
+                if (isWhoseInThisBoard(i - 1, j + 3, thisBoard, meFlag) == 1)
+                    form = form + 6;
+                if (isWhoseInThisBoard(i + 3, j - 1, thisBoard, meFlag) == 1)
+                    form = form + 6;
+                if (isWhoseInThisBoard(i - 3, j - 1, thisBoard, meFlag) == 1)
+                    form = form + 6;
                 /*
                 randf[0]=999;
                 randf[1]=999;
@@ -521,7 +519,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                     dire=randf[ii];
                     if (isWhoseInThisBoard(i+DIR[dire][0],j+DIR[dire][1],thisBoard,0)==1)
                     {
-                        for (k = 0; k < 4; k++)//¶ÔÓÚËÄ¸ö·½Ïò½øÐÐÌôµÄÅÐ¶Ï
+                        for (k = 0; k < 4; k++)//ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
                         {
                             int x1 = i+DIR[dire][0] + intervention_dir[k][0];
                             int y1 = j+DIR[dire][1] + intervention_dir[k][1];
@@ -532,7 +530,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                                 smak=smak+2.4;
                             }
                         }
-                        for (k = 0; k < 8; k++)//¶ÔÓÚ°Ë¸ö·½Ïò½øÐÐ¼ÐµÄÅÐ¶Ï
+                        for (k = 0; k < 8; k++)//ï¿½ï¿½ï¿½Ú°Ë¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼Ðµï¿½ï¿½Ð¶ï¿½
                         {
                             int x1 = i+DIR[dire][0] + custodian_dir[k][0];
                             int y1 = j+DIR[dire][1] + custodian_dir[k][1];
@@ -547,7 +545,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                 }
                 //printf("%d\n",dire);
                 */
-/*
+                /*
                 for (dire=0;dire<8;dire++)
                 {
 
@@ -565,16 +563,16 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                 }
 */
                 /*
-                x[s-1]=i;//ÊÕ¼¯·½²îÊý¾Ý£¬×ø±êx
-                y[s-1]=j;//ÊÕ¼¯·½²îÊý¾Ý£¬×ø±êy
+                x[s-1]=i;//ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½x
+                y[s-1]=j;//ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½y
                 sumx=sumx+i;
                 sumy=sumy+j;
                 */
             }
-            if (isWhoseInThisBoard(i,j,thisBoard,otherFlag)==1)
+            if (isWhoseInThisBoard(i, j, thisBoard, otherFlag) == 1)
             {
-                if(isWhoseInThisBoard(i+1,j+1,thisBoard,meFlag)==1||isWhoseInThisBoard(i-1,j-1,thisBoard,meFlag)==1||isWhoseInThisBoard(i+1,j-1,thisBoard,meFlag)==1||isWhoseInThisBoard(i-1,j+1,thisBoard,meFlag)==1)//3*2¶Ô½ÇÏß
-                    form=form+2;
+                if (isWhoseInThisBoard(i + 1, j + 1, thisBoard, meFlag) == 1 || isWhoseInThisBoard(i - 1, j - 1, thisBoard, meFlag) == 1 || isWhoseInThisBoard(i + 1, j - 1, thisBoard, meFlag) == 1 || isWhoseInThisBoard(i - 1, j + 1, thisBoard, meFlag) == 1) //3*2ï¿½Ô½ï¿½ï¿½ï¿½
+                    form = form + 2;
                 /*
                 randf[0]=999;
                 randf[1]=999;
@@ -599,7 +597,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                     dire=randf[ii];
                     if (isWhoseInThisBoard(i+DIR[dire][0],j+DIR[dire][1],thisBoard,0)==1)
                     {
-                        for (k = 0; k < 4; k++)//¶ÔÓÚËÄ¸ö·½Ïò½øÐÐÌôµÄÅÐ¶Ï
+                        for (k = 0; k < 4; k++)//ï¿½ï¿½ï¿½ï¿½ï¿½Ä¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½
                         {
                             int x1 = i+DIR[dire][0] + intervention_dir[k][0];
                             int y1 = j+DIR[dire][1] + intervention_dir[k][1];
@@ -610,7 +608,7 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                                 smak=smak-1.5;
                             }
                         }
-                        for (k = 0; k < 8; k++)//¶ÔÓÚ°Ë¸ö·½Ïò½øÐÐ¼ÐµÄÅÐ¶Ï
+                        for (k = 0; k < 8; k++)//ï¿½ï¿½ï¿½Ú°Ë¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¼Ðµï¿½ï¿½Ð¶ï¿½
                         {
                             int x1 = i+DIR[dire][0] + custodian_dir[k][0];
                             int y1 = j+DIR[dire][1] + custodian_dir[k][1];
@@ -625,36 +623,35 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
                 }
                 */
 
-                for (dire=0;dire<8;dire++)
+                for (dire = 0; dire < 8; dire++)
                 {
 
-                        if (isWhoseInThisBoard(i-DIR[dire][0],j-DIR[dire][1],thisBoard,meFlag)==1)
-                        {
-                            othersDangerousDisks++;
-                            break;
-                        }
-                        if (isWhoseInThisBoard(i+2*DIR[dire][0],j+2*DIR[dire][1],thisBoard,otherFlag)==1)
-                        {
-                            othersDangerousDisks++;
-                            break;
-                        }
-
+                    if (isWhoseInThisBoard(i - DIR[dire][0], j - DIR[dire][1], thisBoard, meFlag) == 1)
+                    {
+                        othersDangerousDisks++;
+                        break;
+                    }
+                    if (isWhoseInThisBoard(i + 2 * DIR[dire][0], j + 2 * DIR[dire][1], thisBoard, otherFlag) == 1)
+                    {
+                        othersDangerousDisks++;
+                        break;
+                    }
                 }
 
-            //    sother++;
-            //    xother[sother-1]=i;//ÊÕ¼¯·½²îÊý¾Ý£¬×ø±êx
-            //    yother[sother-1]=j;//ÊÕ¼¯·½²îÊý¾Ý£¬×ø±êy
-            //    sumotherx=sumotherx+i;
-            //    sumothery=sumothery+j;
+                //    sother++;
+                //    xother[sother-1]=i;//ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½x
+                //    yother[sother-1]=j;//ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ý£ï¿½ï¿½ï¿½ï¿½ï¿½y
+                //    sumotherx=sumotherx+i;
+                //    sumothery=sumothery+j;
             }
         }
     }
-    if (s==0)
+    if (s == 0)
     {
         return -999999;
     }
     /*
-    if (1)//µ±×Ô¼º²»ºÜÕ¼¾ÝÓÅÊÆ¾Í¾Û¼¯£¨È«¾Ö£©
+    if (1)//ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½Æ¾Í¾Û¼ï¿½ï¿½ï¿½È«ï¿½Ö£ï¿½
     {
 
         if (meFlag==1)
@@ -669,106 +666,106 @@ int searchValue(char thisBoard[BOARD_SIZE][BOARD_SIZE])
         }
 
 
-        averx=sumx/s;//¿ªÊ¼´¦Àí×Ô¼ºµÄ·½²îx£¬Æ½¾ùx
-        avery=sumy/s;//¿ªÊ¼´¦Àí×Ô¼ºµÄ·½²îy£¬Æ½¾ùy
+        averx=sumx/s;//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½xï¿½ï¿½Æ½ï¿½ï¿½x
+        avery=sumy/s;//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½yï¿½ï¿½Æ½ï¿½ï¿½y
 
         for (i=0;i<s;i++)
         {
             ex=ex+(x[i]-averx)*(x[i]-averx);
             ey=ey+(y[i]-avery)*(y[i]-avery);
         }
-        e=ex/(s-1)+ey/(s-1);//×ÔÉí·½²î´¦ÀíÍê³É
+        e=ex/(s-1)+ey/(s-1);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î´¦ï¿½ï¿½ï¿½ï¿½ï¿½
         efinal=e-12;
     }
     */
     /*
-    if (s<=sother+2)//µ±×Ô¼ºµÄÕ¼¾ÝÓÅÊÆ¾Í¾Û¼¯µ½¶Ô·½£¨±»ÆúÓÃ£©
+    if (s<=sother+2)//ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½Æ¾Í¾Û¼ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã£ï¿½
     {
-        averx=sumx/s;//¿ªÊ¼´¦Àí×Ô¼ºµÄ·½²îx£¬Æ½¾ùx
-        avery=sumy/s;//¿ªÊ¼´¦Àí×Ô¼ºµÄ·½²îy£¬Æ½¾ùy
+        averx=sumx/s;//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½xï¿½ï¿½Æ½ï¿½ï¿½x
+        avery=sumy/s;//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½ï¿½yï¿½ï¿½Æ½ï¿½ï¿½y
         for (i=0;i<s;i++)
         {
             ex=ex+(x[i]-averx)*(x[i]-averx);
             ey=ey+(y[i]-avery)*(y[i]-avery);
         }
-        e=ex/(s-1)+ey/(s-1);//×ÔÉí·½²î´¦ÀíÍê³É
-        averotherx=sumotherx/sother;//¿ªÊ¼´¦Àí¶Ô·½µÄ·½²îx£¬Æ½¾ùx
-        averothery=sumothery/sother;//¿ªÊ¼´¦Àí¶Ô·½µÄ·½²îy£¬Æ½¾ùy
+        e=ex/(s-1)+ey/(s-1);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½î´¦ï¿½ï¿½ï¿½ï¿½ï¿½
+        averotherx=sumotherx/sother;//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½Ä·ï¿½ï¿½ï¿½xï¿½ï¿½Æ½ï¿½ï¿½x
+        averothery=sumothery/sother;//ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½Ä·ï¿½ï¿½ï¿½yï¿½ï¿½Æ½ï¿½ï¿½y
         for (i=0;i<s;i++)
         {
             eotherx=eotherx+(x[i]-averotherx)*(x[i]-averotherx);
             eothery=eothery+(y[i]-averothery)*(y[i]-averothery);
         }
-        eother=eotherx/(s-1)+eothery/(s-1);//¶Ô·½Ïà¶ÔÓÚ×Ô¼ºµÄ·½²î´¦ÀíÍê³É
-        efinal=3/2*e+1/2*eother;//efinalÊÇ¼ÙÉè¶Ô·½µÄÆ½¾ùÎ»ÖÃµÃ³öµÄ·½²î
+        eother=eotherx/(s-1)+eothery/(s-1);//ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä·ï¿½ï¿½î´¦ï¿½ï¿½ï¿½ï¿½ï¿½
+        efinal=3/2*e+1/2*eother;//efinalï¿½Ç¼ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½Æ½ï¿½ï¿½Î»ï¿½ÃµÃ³ï¿½ï¿½Ä·ï¿½ï¿½ï¿½
     }
     */
-    finalScore=1500*s+280*smak+280*syek+190*othersDangerousDisks-40*myDangerousDisks+13*form-7*gather;
+    finalScore = 1500 * s + 280 * smak + 280 * syek + 190 * othersDangerousDisks - 40 * myDangerousDisks + 13 * form - 7 * gather;
     //printf("%d\n",finalScore);
     return finalScore;
 }
-int AlphaBeta(int nPlay,int nAlpha,int nBeta,char thisBoard[BOARD_SIZE][BOARD_SIZE],int this_flag)
+int AlphaBeta(int nPlay, int nAlpha, int nBeta, char thisBoard[BOARD_SIZE][BOARD_SIZE], int this_flag)
 {
-	//printf("depth %d\n",nPlay);
-	char currentBoard[BOARD_SIZE][BOARD_SIZE];
-	int score;
-	int i;
-	int j;
-	int k;
-	int x;
-	int y;
-	int ii;
-	int jj;
-	if(nPlay==0)
-		return searchValue(thisBoard);  //Ò¶×Ó½Úµã·µ»Ø¹ÀÖµ
-	for (i=0;i<BOARD_SIZE;i++)
+    //printf("depth %d\n",nPlay);
+    char currentBoard[BOARD_SIZE][BOARD_SIZE];
+    int score;
+    int i;
+    int j;
+    int k;
+    int x;
+    int y;
+    int ii;
+    int jj;
+    if (nPlay == 0)
+        return searchValue(thisBoard); //Ò¶ï¿½Ó½Úµã·µï¿½Ø¹ï¿½Öµ
+    for (i = 0; i < BOARD_SIZE; i++)
     {
-        for (j=0;j<BOARD_SIZE;j++)
+        for (j = 0; j < BOARD_SIZE; j++)
         {
-            currentBoard[i][j]=thisBoard[i][j];
+            currentBoard[i][j] = thisBoard[i][j];
         }
     }
-	for (k=0;k<=7;k++)
+    for (k = 0; k <= 7; k++)
     {
-		for (i=0;i<BOARD_SIZE;i++)
+        for (i = 0; i < BOARD_SIZE; i++)
         {
-            for (j=0;j<BOARD_SIZE;j++)
+            for (j = 0; j < BOARD_SIZE; j++)
             {
-                if (isWhoseInThisBoard(i,j,currentBoard,this_flag)==1)
+                if (isWhoseInThisBoard(i, j, currentBoard, this_flag) == 1)
                 {
-                        x=i+DIR[kk[k]][0];
-                        y=j+DIR[kk[k]][1];
-                        if (isInBound(x,y)&&currentBoard[x][y]==0)
+                    x = i + DIR[kk[k]][0];
+                    y = j + DIR[kk[k]][1];
+                    if (isInBound(x, y) && currentBoard[x][y] == 0)
+                    {
+                        currentBoard[x][y] = this_flag;
+                        currentBoard[i][j] = EMPTY;
+                        searchPlace(x, y, this_flag, currentBoard);                                  //ï¿½ï¿½ï¿½ï¿½ï¿½Â½Úµï¿½
+                        score = -AlphaBeta(nPlay - 1, -nBeta, -nAlpha, currentBoard, 3 - this_flag); //ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó½Úµï¿½
+                        for (ii = 0; ii < BOARD_SIZE; ii++)                                          //ï¿½Ö¸ï¿½Ô­ï¿½Úµï¿½
                         {
-							currentBoard[x][y]=this_flag;
-							currentBoard[i][j]=EMPTY;
-                            searchPlace(x,y,this_flag,currentBoard);//Éú³ÉÐÂ½Úµã
-                            score=-AlphaBeta(nPlay-1,-nBeta,-nAlpha,currentBoard,3-this_flag);//µÝ¹éËÑË÷×Ó½Úµã
-							for (ii=0;ii<BOARD_SIZE;ii++)//»Ö¸´Ô­½Úµã
+                            for (jj = 0; jj < BOARD_SIZE; jj++)
                             {
-                                for (jj=0;jj<BOARD_SIZE;jj++)
-                                {
-                                    currentBoard[ii][jj]=thisBoard[ii][jj];
-                                }
+                                currentBoard[ii][jj] = thisBoard[ii][jj];
                             }
-                            if (score > nAlpha)
+                        }
+                        if (score > nAlpha)
+                        {
+                            nAlpha = score;
+                            if (nPlay == 4)
                             {
-                                nAlpha=score;
-                                if(nPlay==4)
-                                {
-                                    command.x=i;
-                                    command.y=j;
-                                    command.option=kk[k];
-                                }
+                                command.x = i;
+                                command.y = j;
+                                command.option = kk[k];
                             }
-                            if (score >= nBeta)
-                            {
-                                return nBeta;
-                            }
-						}
-					}
+                        }
+                        if (score >= nBeta)
+                        {
+                            return nBeta;
+                        }
+                    }
                 }
             }
+        }
     }
-    return nAlpha;//·µ»Ø×îÐ¡Öµ
+    return nAlpha; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµ
 }
